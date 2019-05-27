@@ -1,0 +1,147 @@
+.mobile--navmenu {
+    display: none;
+}
+
+.hamburger-header {
+    display: none;
+}
+
+.link--header {
+    color: lightgrey;
+
+    &:hover {
+        color: white;
+    }
+}
+
+.profile-item {
+  position: relative;
+}
+
+.dropdown {
+  position: absolute;
+  z-index: 99;
+  padding: 10px;
+  width: 100px;
+  background-color: $dark-gray;
+  left: 0;
+  display: none;
+
+  & > li {
+    border-top: 1px solid $light-gray;
+  }
+}
+
+.container--header {
+    background-color: $dark-gray;
+    color: lightgrey;
+    display: grid;
+    place-items: center;
+    grid-template-columns: repeat(7, 1fr);
+    grid-template-rows: 1fr;
+    font-size: 20px;
+}
+
+.list--header {
+    padding: 20px 0;
+    margin: 0;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+
+    & > li {
+        padding: 0 10px;
+    }
+
+    & > form {
+        padding-left: 20px;
+    }
+}
+
+.searchbar--header {
+    background: $dark-gray;
+    border: 1px solid gray;
+    color: white;
+    padding: 3px;
+    border-radius: 3px;
+    transition: all 200ms ease-in-out;
+
+    &:focus {
+        outline: 0;
+        border: 1px solid lightgray;
+        box-shadow: 0 0 5px lightgray;
+    }
+}
+
+.signin--list {
+    grid-column: 6 / span 2;
+}
+
+.btn-hidden {
+    display: none;
+}
+
+@media screen and (max-width: 1200px) {
+    .signin--list {
+        grid-column: 5 / span 3;
+    }
+}
+
+@media screen and (max-width: 950px) {
+    .container--header {
+        font-size: 16px;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+    }
+
+    .hamburger-header {
+        display: block;
+        font-size: 20px;
+        transition: color 200ms ease-in-out;
+
+        &:hover {
+            color: white;
+            cursor: pointer;
+        }
+    }
+
+    .navbar {
+        display: none;
+    }
+
+    .mobile--navmenu {
+        background: $dark-gray;
+    }
+
+    .list--header > li {
+        width: 100%;
+    }
+
+    .list--navbar {
+        flex-direction: column;
+        padding: 0;
+
+        & > li {
+            padding: 10px 0;
+        }
+    }
+
+    .searchbar--header {
+        width: 100%;
+        background: white;
+        border: 1px solid gray;
+        padding: 10px;
+        border-radius: 3px;
+        transition: all 200ms ease-in-out
+    }
+
+    .link--header {
+        display: block;
+        width: 100%;
+    }
+
+    .signin--list {
+        min-width: 150px;
+    }
+}

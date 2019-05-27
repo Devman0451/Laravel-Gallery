@@ -1,0 +1,41 @@
+.support--title {
+    margin: 20px 0;
+    text-align: center;
+  }
+  
+.support--container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 10px;
+  }
+  
+.support--block {
+    margin-left: 12vw;
+
+    & > ul {
+        padding: 0;
+    }
+
+    & a {
+        color: $dark-gray;
+
+        &:hover {
+            color: gray;
+        }
+    }
+  }
+  
+  
+  @media screen and (max-width: 700px) {
+    .support--block {
+      margin-left: 2vw;
+    }
+    
+  }
+  
+  @media screen and (max-width: 500px) {
+    .support--container {
+      grid-template-columns: 1fr;
+    }
+    
+  }

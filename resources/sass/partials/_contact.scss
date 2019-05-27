@@ -1,0 +1,102 @@
+.contact {
+    padding: 20px 0;
+    background-color: rgb(45, 45, 45);
+    color: $light-gray;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+}
+  
+.newsletter {
+    margin-bottom: 30px;
+}
+  
+.container--contact {
+    width: 90%;
+    display: flex;
+    justify-content: space-between;
+
+    & h5 {
+        font-size: 20px;
+    }
+
+    & p {
+        max-width: 300px;
+    }
+}
+  
+.btn-subscribe {
+    background-color:rgb(45, 45, 45);
+    border: 1px solid $light-gray;
+    color: $light-gray;
+    font-size: 12px;
+    padding: 5px 10px;
+    border-radius: 2px;
+    transition: all 200ms ease-in-out;
+
+    &:hover {
+        background-color:  $light-gray;
+        color: $dark-gray;
+        cursor: pointer;
+    }
+}
+   
+.list--contact {
+    display: flex;
+    padding: 0;
+
+    & a {
+        color: $light-gray;
+        font-size: 25px;
+        margin: 0 20px; 
+
+        &:hover {
+            color: gray;
+        }
+    }
+}
+
+  
+@media screen and (max-width: 950px) {
+    .subscribebar {
+      max-width: 302px;
+    }
+  
+    .btn-subscribe {
+      display: block;
+      font-size: 16px;
+      width: 322px;
+    }
+}
+  
+@media screen and (max-width: 800px) {
+    .container--contact {
+      flex-direction: column;
+      text-align: center;
+
+      & p {
+        max-width: 100%;
+      }
+    }
+
+    .list--contact {
+      justify-content: center;
+      align-items: center;
+    }
+  
+    .newsletter-form {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+  
+    .subscribebar {
+      width: auto;
+    }
+  
+    .btn-subscribe {
+      font-size: 16px;
+      width: 217px;
+    }
+}

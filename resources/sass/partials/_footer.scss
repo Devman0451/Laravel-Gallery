@@ -1,0 +1,54 @@
+.footer {
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    justify-content: space-around;
+    color: $light-gray;
+    background-color: $dark-gray;
+}
+  
+.year {
+    color: gray;
+}
+  
+.name {
+    font-weight: bold;
+}
+  
+.logo--footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+  
+.list--footer {
+    display: flex;
+    align-self: center;
+
+    & > li {
+        margin: 0 10px;
+    }
+} 
+
+  
+@media screen and (max-width: 750px) {
+    .footer {
+      flex-direction: column;
+    }
+} 
+  
+@media screen and (max-width: 500px) {
+    .footer {
+      flex-direction: column;
+      text-align: center;
+    }
+  
+    .list--footer{
+      flex-direction: column;
+      padding: 0;
+    }
+  
+    .verticalbar {
+      display: none;
+    }
+} 

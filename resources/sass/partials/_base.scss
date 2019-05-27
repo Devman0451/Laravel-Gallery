@@ -1,0 +1,48 @@
+body {
+    font-family: 'Merriweather Sans', sans-serif;
+    min-height: 100vh;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+}
+
+a {
+    text-decoration: none;
+    transition: color 200ms ease-in-out
+}
+
+label {
+  margin-top: 10px;
+  font-weight: bold;
+}
+
+svg {
+  fill: white;
+}
+
+.Background {
+  background: gray;
+  width: 50px;
+  border-radius: 50%;
+}
+
+ul {
+  list-style: none;
+}
+
+input[type="file"] {
+  position: absolute;
+  left: -9999rem;
+}
+
+.errormsg {
+  font-weight: bold;
+  color: red;
+  text-align: center;
+}
+
+.successmsg {
+  font-weight: bold;
+  color: rgb(105, 224, 145);
+  text-align: center;
+  margin-top: 10px;
+}

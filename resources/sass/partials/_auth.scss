@@ -1,0 +1,46 @@
+.card-header {
+    background: $dark-gray;
+    color: lightgray;
+    font-size: 18px;
+}
+
+.signup--container{
+    width: 300px;
+
+    & h2 {
+        text-align: center;
+    }
+    }
+
+    .signup-form {
+
+    & input {
+        margin-top: 4px;
+        padding: 4px;
+
+        &:focus {
+            outline: 0;
+            border: 1px solid lightgray;
+            box-shadow: 0 0 5px lightgray;
+        }
+    }
+
+    & .auth-btn {
+        display: block;
+        width: 110px;
+        margin: 0;
+        padding: 7px 14px;
+        border: 1px solid $dark-gray;
+        background-color: white;
+        font-weight: bold;
+        transition: all 200ms ease-in-out;
+        }
+
+    & .auth-btn:hover {
+        cursor: pointer;
+        background-color: $dark-gray;
+        color: white;
+        }
+
+}
+  

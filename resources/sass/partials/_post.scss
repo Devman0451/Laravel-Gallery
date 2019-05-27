@@ -1,0 +1,58 @@
+.post-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 80%;
+    margin: 0 auto;
+
+    & span {
+        font-weight: 400;
+        font-size: 30px; 
+    }
+}
+  
+  
+.post--image-container > img {
+    width: 100%;
+}
+  
+.description {
+    border-bottom: 2px solid #ddd;
+    margin: 0;
+    padding: 10px 0;
+    width: 100%;
+}
+  
+.comments {
+    width: 100%;
+}
+  
+.comments-list {
+    padding: 0;
+    width: 100%;
+    text-align: left;
+}
+  
+.comment-single {
+    border: 1px solid #ddd;
+    padding: 0 10px;
+
+    & span {
+        font-size: 16px;
+    }
+
+    & p:nth-child(1) {
+        font-weight: bold;
+    }
+}
+  
+.comment-form {
+    width: 100%;
+    margin-bottom: 10px;
+}
+  
+.comment {
+    height: 50px;
+    width: 100%;
+}

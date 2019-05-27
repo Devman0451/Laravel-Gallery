@@ -1,0 +1,23 @@
+.signup-form.upload-form {
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+  
+.upload--fileupload {
+    text-align: center;
+    border: 1px solid $dark-gray;
+    display: inline-block;
+    padding: 6px 12px;
+    cursor: pointer;
+    transition: background 200ms ease-in-out;
+
+    &:hover {
+        background: $dark-gray;
+        color: white; 
+    }
+}
+
+.filename {
+    margin-top: 10px;
+}
