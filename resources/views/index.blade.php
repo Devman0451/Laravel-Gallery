@@ -24,7 +24,7 @@
                                 </div>
                             </div>
                         </div>
-                        <img src="/storage/images/uploads/{{ $project->image_thumb }}" alt="" class="image">
+                        <img src="/storage/images/uploads/{{ $project->owner->username }}/thumbs/{{ $project->image_thumb }}" alt="" class="image">
                     </div>
                 </a>
             @endforeach

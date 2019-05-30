@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Project;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Facades\Image;
 
 class ProjectsController extends Controller
 {
@@ -47,12 +49,14 @@ class ProjectsController extends Controller
             'image' => 'required|image|max:2000'
         ]);
 
-        $fileNameWithExt = $request->file('image')->getClientOriginalName();
-        $fileName = pathinfo($fileNameWithExt, PATHINFO_FILENAME);
-        $extension = $request->file('image')->getClientOriginalExtension();
-        //Note: add username to front once auth is added
-        $fileNameToStore = $fileName . '_' . uniqid('', true) . '.' . $extension;
-        $request->file('image')->storeAs('public/images/uploads', $fileNameToStore);
+        $fileNameToStore = $this->processImage($request->file('image'), auth()->user()->username);
+
+        // $fileNameWithExt = $request->file('image')->getClientOriginalName();
+        // $fileName = pathinfo($fileNameWithExt, PATHINFO_FILENAME);
+        // $extension = $request->file('image')->getClientOriginalExtension();
+        // //Note: add username to front once auth is added
+        // $fileNameToStore = $fileName . '_' . uniqid('', true) . '.' . $extension;
+        // $request->file('image')->storeAs('public/images/uploads', $fileNameToStore);
 
         $attributes['image'] = $fileNameToStore;
         $attributes['image_thumb'] = $fileNameToStore;
@@ -82,7 +86,11 @@ class ProjectsController extends Controller
      */
     public function edit(Project $project)
     {
-        //
+        if (auth()->user()->id !== $project->owner_id) {
+            return redirect('/')->with('error', 'Unauthorized Page');
+        }
+
+        return view('projects.edit', compact('project'));
     }
 
     /**
@@ -94,7 +102,19 @@ class ProjectsController extends Controller
      */
     public function update(Request $request, Project $project)
     {
-        //
+        if(auth()->user()->id !== $project->owner_id) {
+            return redirect('/')->with('error', 'Umauthorized Page');
+        }
+
+        $attributes = $this->validate($request, [
+            'title' => 'required|max:100',
+            'description' => 'nullable',
+            'tags' => 'nullable',
+        ]);
+
+        $project->update($attributes);
+
+        return redirect('/projects/' . $project->id)->with(compact('project'));
     }
 
     /**
@@ -105,6 +125,41 @@ class ProjectsController extends Controller
      */
     public function destroy(Project $project)
     {
-        //
+        if (auth()->user()->id !== $project->owner_id) {
+            return redirect('/')->with('error', 'Unauthorized Page');
+        }
+
+        Storage::delete('public/images/uploads/' . auth()->user()->username . '/' . $project->image);
+        Storage::delete('public/images/uploads/' . auth()->user()->username . '/thumbs/' . $project->image_thumb);
+
+        $project->delete();
+
+        return redirect('/')->with('success', 'Post Deleted');
+    }
+
+     /**
+     * Generate image and a thumbnail
+     *@param UploadedFile image file 
+    * @param string username of the user uploading the image. 
+     * @return String
+     */
+    protected function processImage($image, $username) {
+
+        $fileNameWithExt = $image->getClientOriginalName();
+        $fileName = pathinfo($fileNameWithExt, PATHINFO_FILENAME);
+        $extension = $image->getClientOriginalExtension();
+        $fileNameToStore = $fileName . '_' . uniqid('', true) . '.' . $extension;
+        $path = 'public/images/uploads/' . $username;
+        $image->storeAs($path, $fileNameToStore);
+
+        $thumbPath = public_path('storage/images/uploads/' . $username . '/thumbs');
+
+        if (!file_exists($thumbPath)) {
+            mkdir($thumbPath, 0777, true);
+        }
+
+        create_thumbnail($image->path(), $extension, $thumbPath . '/' . $fileNameToStore);
+
+        return $fileNameToStore;
     }
 }

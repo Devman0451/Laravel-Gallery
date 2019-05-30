@@ -41,7 +41,7 @@
                 <li class="profile-item">
                     <a href="" class="link--header">{{ Auth::user()->username }}</a>
                     <ul class="dropdown">
-                        <li><a href="edit_profile.php" class="link--header">Edit Profile</a></li>
+                        <li><a href="edit_profile.php" class="link--header">Edit</a></li>
                         <li><a href="/projects/create" class="link--header">Upload</a></li>
                         <li>
                         <a class="link--header" href="{{ route('logout') }}"

@@ -9,7 +9,6 @@
         <form action="/projects" method="post" enctype="multipart/form-data" class="signup-form upload-form">
             @csrf
 
-            <input type="hidden" name="key" value="2NDvBgJ4pP2R9NzGWAbhiPYzx1UwQhtO">
             <label for="title">Title</label>
             <input type="text" name="title">
             <label for="tags">Tags</label>
