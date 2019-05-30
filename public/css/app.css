@@ -11714,7 +11714,7 @@ input[type=file] {
 }
 
 .users-container {
-  margin: 10px;
+  margin: 10px 0;
 }
 
 .users-table {
@@ -11722,11 +11722,17 @@ input[type=file] {
   border-collapse: collapse;
 }
 
+tr {
+  background: #111111;
+}
+
+tr:nth-child(2n) {
+  background: #1e1e1e;
+}
+
 td,
 th {
-  border: 1px solid #ddd;
-  padding: 10px;
-  text-align: left;
+  padding: 10px 0;
 }
 
 .contact {
