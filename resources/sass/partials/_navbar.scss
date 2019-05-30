@@ -33,7 +33,7 @@
 }
 
 .container--header {
-    background-color: $dark-gray;
+    background-color: darken($dark-gray, 5%);
     color: lightgrey;
     display: grid;
     place-items: center;

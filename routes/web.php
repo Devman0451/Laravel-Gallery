@@ -25,4 +25,6 @@ Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
 
 Route::resource('projects', 'ProjectsController');
 
+Route::get('/profile/{profile}', 'ProfilesController@show');
+
 

@@ -11048,6 +11048,8 @@ body {
   min-height: 100vh;
   display: grid;
   grid-template-rows: auto 1fr auto;
+  background-color: #1e1e1e;
+  color: #d2d2d2;
 }
 
 a {
@@ -11127,7 +11129,7 @@ input[type=file] {
 }
 
 .container--header {
-  background-color: #1e1e1e;
+  background-color: #111111;
   color: lightgrey;
   display: grid;
   place-items: center;
@@ -11253,7 +11255,7 @@ input[type=file] {
 }
 
 .imagelinks--list a {
-  color: #1e1e1e;
+  color: #d2d2d2;
   margin: 0 10px;
 }
 
@@ -11835,7 +11837,7 @@ th {
   display: flex;
   justify-content: space-around;
   color: #d2d2d2;
-  background-color: #1e1e1e;
+  background-color: #111111;
 }
 
 .year {

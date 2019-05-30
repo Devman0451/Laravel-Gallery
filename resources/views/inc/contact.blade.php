@@ -13,7 +13,7 @@
         </div>
         <div class="connect">
             <h5>Connect with us</h5>
-            <ul class="list--contact">
+            <ul class="list--contact py-3">
                 <li><a href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer"><i class="fab fa-facebook-square"></i></a></li>
                 <li><a href="https://twitter.com" target="_blank" rel="noopener noreferrer"><i class="fab fa-twitter-square"></i></a></li>
                 <li><a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer"><i class="fab fa-instagram"></i></a></li>
@@ -21,7 +21,7 @@
         </div>
         <div class="appstore">
             <h5>Mobile App</h5>
-            <ul class="list--contact">
+            <ul class="list--contact py-3">
                 <li><a href="https://play.google.com/store?hl=en_US" target="_blank" rel="noopener noreferrer"><i class="fab fa-google-play"></i></a></li>
                 <li><a href="https://www.apple.com/ios/app-store/" target="_blank" rel="noopener noreferrer"><i class="fab fa-apple"></i></a></li>
             </ul>

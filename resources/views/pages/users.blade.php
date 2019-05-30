@@ -4,7 +4,7 @@
     
     <section class="users py-4">
         <h1 class="users-title">Users</h1>
-        <div class="users-container">
+        <div class="users-container py-4">
             <table class="users-table">
 
                 <tr>
@@ -18,8 +18,8 @@
                     @foreach ($users as $user)
                         
                     <tr>
-                        <td><a href="profile.php?user="><img src="" alt="avatar" class="profile-icon"></a></td>
-                        <td><a href="profile.php?user=">{{ $user->username }}</a></td>
+                        <td><a href="/profile/{{ $user->profile->id }}"><img src="" alt="avatar" class="profile-icon"></a></td>
+                        <td><a href="/profile/{{ $user->profile->id }}">{{ $user->username }}</a></td>
                         <td>{{ $user->created_at }}</td>
                     </tr>
 
@@ -28,7 +28,8 @@
                     <p class="text-center">No users registered!</p>
                 @endif
 
-            </table>
+            </table> 
         </div>
+        {{$users->links()}}
     </section>
 @endsection
