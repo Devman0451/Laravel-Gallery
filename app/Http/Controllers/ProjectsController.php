@@ -51,13 +51,6 @@ class ProjectsController extends Controller
 
         $fileNameToStore = $this->processImage($request->file('image'), auth()->user()->username);
 
-        // $fileNameWithExt = $request->file('image')->getClientOriginalName();
-        // $fileName = pathinfo($fileNameWithExt, PATHINFO_FILENAME);
-        // $extension = $request->file('image')->getClientOriginalExtension();
-        // //Note: add username to front once auth is added
-        // $fileNameToStore = $fileName . '_' . uniqid('', true) . '.' . $extension;
-        // $request->file('image')->storeAs('public/images/uploads', $fileNameToStore);
-
         $attributes['image'] = $fileNameToStore;
         $attributes['image_thumb'] = $fileNameToStore;
         $attributes['owner_id'] = auth()->id();

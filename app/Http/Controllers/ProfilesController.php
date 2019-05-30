@@ -55,7 +55,7 @@ class ProfilesController extends Controller
             'banner_img' => 'image|nullable|max:2000'
         ]);
 
-        $attributes['profile_img'] = 'storage/images/static/default.jpg';
+        $attributes['profile_img'] = '/storage/images/static/default.jpg';
         $attributes['owner_id'] = auth()->user()->id;
 
         Profile::create($attributes);
