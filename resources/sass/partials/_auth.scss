@@ -4,6 +4,16 @@
     font-size: 18px;
 }
 
+.signup, .signup--container, .signup-form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+.signup {
+  
+    align-items: center;
+  }
+
 .signup--container{
     width: 300px;
 

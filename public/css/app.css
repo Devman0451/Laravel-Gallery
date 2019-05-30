@@ -11392,6 +11392,17 @@ input[type=file] {
   font-size: 18px;
 }
 
+.signup,
+.signup--container,
+.signup-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.signup {
+  align-items: center;
+}
+
 .signup--container {
   width: 300px;
 }
@@ -11617,7 +11628,7 @@ input[type=file] {
 
 .upload--fileupload {
   text-align: center;
-  border: 1px solid #1e1e1e;
+  border: 1px solid #111111;
   display: inline-block;
   padding: 6px 12px;
   cursor: pointer;
@@ -11625,7 +11636,7 @@ input[type=file] {
 }
 
 .upload--fileupload:hover {
-  background: #1e1e1e;
+  background: #111111;
   color: white;
 }
 

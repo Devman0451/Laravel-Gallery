@@ -37,7 +37,7 @@ class ProfilesController extends Controller
      */
     public function create()
     {
-        //
+
     }
 
     /**
@@ -48,7 +48,19 @@ class ProfilesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $attributes = $this->validate($request, [
+            'location' => 'nullable|max:50',
+            'description' => 'nullable',
+            'profile_img' => 'image|nullable|max:200',
+            'banner_img' => 'image|nullable|max:2000'
+        ]);
+
+        $attributes['profile_img'] = 'storage/images/static/default.jpg';
+        $attributes['owner_id'] = auth()->user()->id;
+
+        Profile::create($attributes);
+
+        return redirect('/')->with('success', 'Successfully Registered!');
     }
 
     /**
@@ -72,7 +84,7 @@ class ProfilesController extends Controller
      */
     public function edit(Profile $profile)
     {
-        //
+        return view('profiles.edit', compact('profile'));
     }
 
     /**
@@ -84,7 +96,7 @@ class ProfilesController extends Controller
      */
     public function update(Request $request, Profile $profile)
     {
-        //
+        dd(public_path('storage/images/static/default.jpg'));
     }
 
     /**

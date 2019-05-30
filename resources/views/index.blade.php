@@ -17,7 +17,7 @@
                     <div class="project">
                         <div class="overlay">
                             <div class="info">
-                                <img src="" alt="profile" class="avatar">
+                                <img src="{{ $project->owner->profile->profile_img }}" alt="profile" class="avatar">
                                 <div class="image-info">
                                     <div class="title">{{ $project->title }}</div>
                                     <div class="author">{{ $project->owner->username }}</div>

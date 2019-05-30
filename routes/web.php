@@ -26,5 +26,7 @@ Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
 Route::resource('projects', 'ProjectsController');
 
 Route::get('/profile/{profile}', 'ProfilesController@show');
+Route::get('/profile/{profile}/edit', 'ProfilesController@edit');
+Route::patch('/profile/{profile}', 'ProfilesController@update');
 
 

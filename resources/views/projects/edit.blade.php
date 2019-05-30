@@ -2,8 +2,8 @@
 
 @section('content')
     <section class="signup">
-        <div class="signup--container">
-            <h2>Edit Profile</h2>
+        <div class="signup--container py-4">
+            <h2>Edit Submission</h2>
             <form action="/projects/{{ $project->id }}" method="post" class="signup-form upload-form">
                 @csrf
                 @method('PATCH')
