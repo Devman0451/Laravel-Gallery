@@ -39,7 +39,7 @@
         @else
         <img src="{{ Auth::user()->profile->profile_img }}" alt="profile" class="avatar">       
                 <li class="profile-item">
-                    <a href="" class="link--header">{{ Auth::user()->username }}</a>
+                    <a href="/profile/{{ Auth::user()->profile->id }}" class="link--header">{{ Auth::user()->username }}</a>
                     <ul class="dropdown">
                         <li><a href="/profile/{{ auth()->user()->profile->id }}/edit" class="link--header">Edit</a></li>
                         <li><a href="/projects/create" class="link--header">Upload</a></li>

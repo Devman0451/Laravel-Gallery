@@ -11646,10 +11646,18 @@ input[type=file] {
 
 .profile-banner {
   padding: 60px;
-  max-height: 270px;
   text-align: center;
   position: relative;
   color: white;
+}
+
+.banner-button {
+  position: absolute;
+  background-color: transparent;
+  border: 0;
+  top: 5px;
+  right: 5px;
+  font-size: 20px;
 }
 
 .profile-info {

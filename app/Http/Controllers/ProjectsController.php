@@ -49,7 +49,7 @@ class ProjectsController extends Controller
             'image' => 'required|image|max:2000'
         ]);
 
-        $fileNameToStore = $this->processImage($request->file('image'), auth()->user()->username);
+        $fileNameToStore = processImage($request->file('image'), auth()->user()->username);
 
         $attributes['image'] = $fileNameToStore;
         $attributes['image_thumb'] = $fileNameToStore;
@@ -130,29 +130,29 @@ class ProjectsController extends Controller
         return redirect('/')->with('success', 'Post Deleted');
     }
 
-     /**
-     * Generate image and a thumbnail
-     *@param UploadedFile image file 
-    * @param string username of the user uploading the image. 
-     * @return String
-     */
-    protected function processImage($image, $username) {
+    //  /**
+    //  * Generate image and a thumbnail
+    //  *@param UploadedFile image file 
+    // * @param string username of the user uploading the image. 
+    //  * @return String
+    //  */
+    // protected function processImage($image, $username) {
 
-        $fileNameWithExt = $image->getClientOriginalName();
-        $fileName = pathinfo($fileNameWithExt, PATHINFO_FILENAME);
-        $extension = $image->getClientOriginalExtension();
-        $fileNameToStore = $fileName . '_' . uniqid('', true) . '.' . $extension;
-        $path = 'public/images/uploads/' . $username;
-        $image->storeAs($path, $fileNameToStore);
+    //     $fileNameWithExt = $image->getClientOriginalName();
+    //     $fileName = pathinfo($fileNameWithExt, PATHINFO_FILENAME);
+    //     $extension = $image->getClientOriginalExtension();
+    //     $fileNameToStore = $fileName . '_' . uniqid('', true) . '.' . $extension;
+    //     $path = 'public/images/uploads/' . $username;
+    //     $image->storeAs($path, $fileNameToStore);
 
-        $thumbPath = public_path('storage/images/uploads/' . $username . '/thumbs');
+    //     $thumbPath = public_path('storage/images/uploads/' . $username . '/thumbs');
 
-        if (!file_exists($thumbPath)) {
-            mkdir($thumbPath, 0777, true);
-        }
+    //     if (!file_exists($thumbPath)) {
+    //         mkdir($thumbPath, 0777, true);
+    //     }
 
-        create_thumbnail($image->path(), $extension, $thumbPath . '/' . $fileNameToStore);
+    //     create_thumbnail($image->path(), $extension, $thumbPath . '/' . $fileNameToStore);
 
-        return $fileNameToStore;
-    }
+    //     return $fileNameToStore;
+    // }
 }

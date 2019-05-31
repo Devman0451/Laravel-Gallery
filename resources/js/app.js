@@ -118,6 +118,18 @@ const app = new Vue({
         fileUploadInput.addEventListener('change', addFileTitle);
     }
 
+    //Banner
+    const fileUploadInput2 = document.querySelector('#image2');
+    const fileName2 = document.querySelector('.filename2');
+
+    function addFileTitle2(e) {
+        fileName2.innerText = this.files[0].name;
+    }
+
+    if (fileUploadInput2 != null) {
+        fileUploadInput2.addEventListener('change', addFileTitle2);
+    }
+
     // Handles API call
     // =================================================================================
 
@@ -159,4 +171,5 @@ const app = new Vue({
     if (page === 'classic.php') {
         getClassicalImages();
     }
+    
 })();

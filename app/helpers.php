@@ -59,3 +59,53 @@ if (!function_exists('create_thumbnail')) {
         return true;
     }
 }
+
+/**
+* Generate image and a thumbnail
+*@param UploadedFile image file 
+* @param string username of the user uploading the image. 
+* @return String
+*/
+if (!function_exists('processImage')) {
+    function processImage($image, $username) {
+
+        $fileNameWithExt = $image->getClientOriginalName();
+        $fileName = pathinfo($fileNameWithExt, PATHINFO_FILENAME);
+        $extension = $image->getClientOriginalExtension();
+        $fileNameToStore = $fileName . '_' . uniqid('', true) . '.' . $extension;
+        
+        $path = 'public/images/uploads/' . $username;
+        $image->storeAs($path, $fileNameToStore);
+
+        $thumbPath = public_path('storage/images/uploads/' . $username . '/thumbs');
+
+        if (!file_exists($thumbPath)) {
+            mkdir($thumbPath, 0777, true);
+        }
+
+        create_thumbnail($image->path(), $extension, $thumbPath . '/' . $fileNameToStore);
+
+        return $fileNameToStore;
+    }
+}
+
+/**
+* Generate image and a thumbnail
+*@param UploadedFile image file 
+* @param string username of the user uploading the image. 
+* @return String
+*/
+if (!function_exists('profileImage')) {
+    function profileImage($image, $username) {
+
+        $fileNameWithExt = $image->getClientOriginalName();
+        $fileName = pathinfo($fileNameWithExt, PATHINFO_FILENAME);
+        $extension = $image->getClientOriginalExtension();
+        $fileNameToStore = 'profile_' . $fileName . '_' . uniqid('', true) . '.' . $extension;
+        
+        $path = 'public/images/uploads/' . $username . '/profile';
+        $image->storeAs($path, $fileNameToStore);
+
+        return '/storage/images/uploads/' . $username . '/profile/' . $fileNameToStore;
+    }
+}

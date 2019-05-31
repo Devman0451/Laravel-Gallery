@@ -49364,6 +49364,18 @@ var app = new Vue({
 
   if (fileUploadInput != null) {
     fileUploadInput.addEventListener('change', addFileTitle);
+  } //Banner
+
+
+  var fileUploadInput2 = document.querySelector('#image2');
+  var fileName2 = document.querySelector('.filename2');
+
+  function addFileTitle2(e) {
+    fileName2.innerText = this.files[0].name;
+  }
+
+  if (fileUploadInput2 != null) {
+    fileUploadInput2.addEventListener('change', addFileTitle2);
   } // Handles API call
   // =================================================================================
 

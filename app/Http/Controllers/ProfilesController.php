@@ -51,8 +51,7 @@ class ProfilesController extends Controller
         $attributes = $this->validate($request, [
             'location' => 'nullable|max:50',
             'description' => 'nullable',
-            'profile_img' => 'image|nullable|max:200',
-            'banner_img' => 'image|nullable|max:2000'
+            'profile_img' => 'image|nullable|max:200|dimensions:width=100,height=100',
         ]);
 
         $attributes['profile_img'] = '/storage/images/static/default.jpg';
@@ -96,7 +95,36 @@ class ProfilesController extends Controller
      */
     public function update(Request $request, Profile $profile)
     {
-        dd(public_path('storage/images/static/default.jpg'));
+        if(auth()->user()->id !== $profile->owner_id) {
+            return redirect('/')->with('error', 'Umauthorized Page');
+        }
+
+        $attributes = $this->validate($request, [
+            'location' => 'nullable|max:50',
+            'description' => 'nullable',
+            'profile_img' => 'image|nullable|max:200|dimensions:width=100,height=100',
+            'banner_img' => 'image|nullable|max:2000|dimensions:width=1920,height=365'
+        ]);
+
+        if ($request->hasFile('profile_img')) {
+            if($profile->profile_img !== '/storage/images/static/default.jpg') {
+                $file = explode('/', $profile->profile_img);
+                Storage::delete('public/images/uploads/' . auth()->user()->username . '/profile/' . $file[6]);
+            }
+            $attributes['profile_img'] = profileImage($request->file('profile_img'), auth()->user()->username);
+        }
+
+        if ($request->hasFile('banner_img')) {
+            if($profile->banner_img !== null) {
+                $file = explode('/', $profile->banner_img);
+                Storage::delete('public/images/uploads/' . auth()->user()->username . '/profile/' . $file[6]);
+            }
+            $attributes['banner_img'] = profileImage($request->file('banner_img'), auth()->user()->username);
+        }
+
+        $profile->update($attributes);
+
+        return redirect('/profile/' . $profile->id)->with(compact('profile'));
     }
 
     /**
