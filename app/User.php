@@ -44,4 +44,8 @@ class User extends Authenticatable
     public function profile() {
         return $this->hasOne('App\Profile', 'owner_id');
     }
+
+    public function comments() {
+        return $this->hasMany('App\Comment', 'owner_id');
+    }
 }

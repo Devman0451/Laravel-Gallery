@@ -32,21 +32,23 @@
             <h4 class="pb-4">Comments</h4>
             <ul class="comments-list">
 
-             <li>
-                <div class="comment-single pt-1">
-                    <p>TestUser<span> on </span> 12/11/2019</p>
-                    <p>Test comment</p>
-                </div>
-            </li>
+            @if (count($project->comments) > 0)
+                @foreach($project->comments as $comment)
+                    <li>
+                        <div class="comment-single pt-1">
+                            <p><a href="/profile/{{ $comment->owner->profile->id }}" class="text-light">{{ $comment->owner->username }}</a><span> on </span> {{ $comment->created_at->format('m-d-Y H:i:s') }}</p>
+                            <p>{{ $comment->comment }}</p>
+                        </div>
+                    </li>
+                @endforeach
+            @endif
 
             </ul>
         </div>
 
         @auth
-            <form action="includes/comment.inc.php" method="post" class="comment-form">
+            <form action="/comment?project={{ $project->id }}" method="post" class="comment-form">
                 @csrf
-
-                <input type="hidden" name="img_id" value="' . $id . '">
                 <textarea name="comment" cols="30" rows="10" class="comment"></textarea>
                 <input type="submit" name="submit" value="Submit" class="btn-subscribe">
             </form>

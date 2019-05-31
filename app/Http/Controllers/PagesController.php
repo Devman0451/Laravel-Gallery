@@ -34,7 +34,7 @@ class PagesController extends Controller
     }
 
     public function users() {
-        $users = User::paginate(10);
+        $users = User::orderBy('created_at', 'desc')->paginate(10);
         return view('pages.users', compact('users'));
     }
 }

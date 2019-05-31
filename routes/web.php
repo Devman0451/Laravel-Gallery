@@ -29,4 +29,6 @@ Route::get('/profile/{profile}', 'ProfilesController@show');
 Route::get('/profile/{profile}/edit', 'ProfilesController@edit');
 Route::patch('/profile/{profile}', 'ProfilesController@update');
 
+Route::post('/comment', 'CommentController@store');
+
 
