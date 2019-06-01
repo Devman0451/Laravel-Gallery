@@ -36,3 +36,5 @@ Route::post('/like', 'LikesController@store');
 Route::delete('/like/{like}', 'LikesController@destroy');
 
 Route::resource('messages', 'ConversationsController');
+
+Route::post('/message', 'MessageController@store');

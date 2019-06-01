@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Conversation;
+use App\User;
+use App\Message;
 use Illuminate\Http\Request;
 
 class ConversationsController extends Controller
@@ -29,21 +31,15 @@ class ConversationsController extends Controller
      */
     public function create()
     {
-        if (!isset($_GET['user'])) {
-            return redirect()->back();
-        }
-        
-        $conversation = Conversation::where('sender_id', auth()->user()->id)
-                                    ->where('received_id', $_GET['user'])
-                                    ->orWhere('sender_id', $_GET['user'])
-                                    ->where('received_id', auth()->user()->id)
-                                    ->get();
-        
-        if (count($conversation) > 0) {
-            return redirect('/messages/' . $conversation->id);
-        }
 
-        return view('conversations.create');
+        $conversation = $this->verifyConversation($_GET['user']);
+        
+        if ($conversation == null) return redirect('/messages');
+
+        return view('conversations.create', [
+            'conversation' => $conversation[0],
+            'send_id'=> $_GET['user']
+        ]);
     }
 
     /**
@@ -54,7 +50,22 @@ class ConversationsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $conversation = $this->verifyConversation($_GET['user']);
+        
+        if ($conversation == null) return redirect('/messages');
+
+        $attributes = $this->validate($request, [
+            'message' => 'required|min:1'
+        ]);
+
+        $attributes['sender_id'] = auth()->user()->id;
+        $attributes['conversation_id'] = $conversation[0]->id;
+
+        Message::create($attributes);
+
+        $messages = Message::where('conversation_id', $conversation[0]->id);
+
+        return redirect()->back()->with('conversation', $conversation);
     }
 
     /**
@@ -100,5 +111,32 @@ class ConversationsController extends Controller
     public function destroy(Conversation $conversation)
     {
         //
+    }
+
+    protected function verifyConversation($id) {
+        if (!isset($id)) {
+            return null;
+        }
+
+        $to = User::where('id', $id)->get();
+
+        if (count($to) == 0) {
+            return null;
+        }
+
+        $conversation = Conversation::where('sender_id', auth()->user()->id)
+                                    ->where('received_id', $id)
+                                    ->orWhere('sender_id', $id)
+                                    ->where('received_id', auth()->user()->id)
+                                    ->get();
+
+        if (count($conversation) == 0) {
+            $conversation = Conversation::create([
+                'sender_id' => auth()->user()->id,
+                'received_id' => $_GET['user']
+            ]);
+        }
+
+        return $conversation;
     }
 }

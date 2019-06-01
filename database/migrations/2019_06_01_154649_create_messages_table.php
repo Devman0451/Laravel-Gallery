@@ -17,7 +17,6 @@ class CreateMessagesTable extends Migration
             $table->bigIncrements('id');
             $table->bigInteger('sender_id')->unsigned();
             $table->bigInteger('conversation_id')->unsigned();
-            $table->string('subject');
             $table->text('message');
             $table->boolean('read')->default(0);
             $table->boolean('soft_delete')->default(0);
