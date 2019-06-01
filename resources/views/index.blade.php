@@ -6,7 +6,7 @@
         <ul class="imagelinks--list">
             <li><a href="" rel="">Lastest</a></li>
             <li><a href="" rel="">Trending</a></li>
-            <li><a href="classic.php" rel="">Random</a></li>
+            <li><a href="/random" rel="">Random</a></li>
         </ul>
     </section>
 

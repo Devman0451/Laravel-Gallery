@@ -37,4 +37,9 @@ class PagesController extends Controller
         $users = User::orderBy('created_at', 'desc')->paginate(10);
         return view('pages.users', compact('users'));
     }
+
+    public function random() {
+        return view('pages.random');
+    }
+
 }

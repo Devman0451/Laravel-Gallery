@@ -18,6 +18,7 @@ Route::get('/tos', 'PagesController@tos');
 Route::get('/faq', 'PagesController@faq');
 Route::get('/about', 'PagesController@about');
 Route::get('/users', 'PagesController@users');
+Route::get('/random', 'PagesController@random');
 
 Auth::routes();
 

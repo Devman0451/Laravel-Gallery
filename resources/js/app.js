@@ -156,7 +156,7 @@ const app = new Vue({
                         <p class="description"><strong>Category: </strong>${data.classification ? data.classification : "N/A"}</p>
                         <p class="description"><strong>Cultural Origin: </strong>${data.culture ? data.culture : "N/A"}</p>
                         <p class="tags">View another randomly selected art piece courtesy of the Metropolitan Museum of Art.</p>
-                        <p class="tags"><a href="classic.php" rel=""><strong>New art piece</strong></a></p>
+                        <p class="tags"><a href="/random" rel=""><strong>New art piece</strong></a></p>
                         `;
                     
                     classicPost.innerHTML = info;
@@ -168,7 +168,7 @@ const app = new Vue({
     const page = pages[pages.length - 1]; 
 
     //Checks that the user is on the submissions/index page
-    if (page === 'classic.php') {
+    if (page === 'random') {
         getClassicalImages();
     }
     
