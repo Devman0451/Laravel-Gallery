@@ -12,8 +12,18 @@
     }
 }
   
-  
 .post--image-container > img {
+    width: 100%;
+}
+
+.like-btn {
+    background-color: transparent;
+    border: 0;
+    color: $green;
+    font-size: 20px;
+}
+
+.tag-container {
     width: 100%;
 }
   

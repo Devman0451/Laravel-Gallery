@@ -32,4 +32,7 @@ Route::patch('/profile/{profile}', 'ProfilesController@update');
 
 Route::post('/comment', 'CommentController@store');
 
+Route::post('/like', 'LikesController@store');
+Route::delete('/like/{like}', 'LikesController@destroy');
+
 

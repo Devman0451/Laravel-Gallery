@@ -11688,6 +11688,17 @@ input[type=file] {
   width: 100%;
 }
 
+.like-btn {
+  background-color: transparent;
+  border: 0;
+  color: #38c172;
+  font-size: 20px;
+}
+
+.tag-container {
+  width: 100%;
+}
+
 .description {
   border-bottom: 2px solid #ddd;
   margin: 0;
