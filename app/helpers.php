@@ -90,7 +90,7 @@ if (!function_exists('processImage')) {
 }
 
 /**
-* Generate image and a thumbnail
+* Store profile image
 *@param UploadedFile image file 
 * @param string username of the user uploading the image. 
 * @return String

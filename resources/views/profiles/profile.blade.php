@@ -8,7 +8,13 @@
             background-size: cover;
             background-repeat: no-repeat;
             ">
-            <a href="/profile/{{ $profile->id }}/edit" class="text-white banner-button" title="Upload Banner Image"><i class="fas fa-arrow-up"></i></a>
+            @auth
+                @if (Auth::user()->id == $profile->owner->id)
+                    <a href="/profile/{{ $profile->id }}/edit" class="text-white banner-button" title="Upload Banner Image"><i class="fas fa-arrow-up"></i></a>
+                @else
+                    <a href="/messages/create?user={{ $profile->owner->id }}" class="text-white banner-button btn btn-success message-btn" title="Upload Banner Image">Message</a>
+                @endif
+            @endauth
             <img src="{{ $profile->profile_img }}" alt="profile icon" class="profile-icon">
             <div class="profile-info pb-3">
                 <h1> {{ $profile->owner->username }} </h1>

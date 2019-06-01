@@ -41,6 +41,7 @@
                 <li class="profile-item">
                     <a href="/profile/{{ Auth::user()->profile->id }}" class="link--header">{{ Auth::user()->username }}</a>
                     <ul class="dropdown">
+                            <li><a href="/messages" class="link--header">Messages</a></li>
                         <li><a href="/profile/{{ auth()->user()->profile->id }}/edit" class="link--header">Edit</a></li>
                         <li><a href="/projects/create" class="link--header">Upload</a></li>
                         <li>

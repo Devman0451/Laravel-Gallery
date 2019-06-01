@@ -48,4 +48,24 @@ class User extends Authenticatable
     public function comments() {
         return $this->hasMany('App\Comment', 'owner_id');
     }
+
+    public function likes() {
+        return $this->hasMany('App\Like', 'owner_id');
+    }
+
+    public function sent_messages() {
+        return $this->hasMany('App\Message', 'sender_id');
+    }
+
+    public function started_conversations() {
+        return $this->hasMany('App\Conversation', 'sender_id');
+    }
+
+    public function received_conversations() {
+        return $this->hasMany('App\Conversation', 'received_id');
+    }
+
+    public function conversations() {
+        return $this->started_conversations->merge($this->received_conversations);
+    }
 }
