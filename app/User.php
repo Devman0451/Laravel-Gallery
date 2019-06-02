@@ -64,8 +64,4 @@ class User extends Authenticatable
     public function received_conversations() {
         return $this->hasMany('App\Conversation', 'received_id');
     }
-
-    public function conversations() {
-        return $this->started_conversations->merge($this->received_conversations);
-    }
 }

@@ -38,7 +38,7 @@
 
         @else
         <img src="{{ Auth::user()->profile->profile_img }}" alt="profile" class="avatar">       
-                <li class="profile-item">
+                <li class="profile-item hover-item">
                     <a href="/profile/{{ Auth::user()->profile->id }}" class="link--header">{{ Auth::user()->username }}</a>
                     <ul class="dropdown">
                             <li><a href="/messages" class="link--header">Messages</a></li>

@@ -21,7 +21,12 @@ class ConversationsController extends Controller
      */
     public function index()
     {
-        return view('conversations.index');
+        $conversations = Conversation::where('sender_id', auth()->user()->id)
+                                    ->orWhere('received_id', auth()->user()->id)
+                                    ->get();
+
+
+        return view('conversations.index', compact('conversations'));
     }
 
     /**
@@ -36,9 +41,11 @@ class ConversationsController extends Controller
         
         if ($conversation == null) return redirect('/messages');
 
+        $user = User::where('id', $_GET['user'])->get();
+
         return view('conversations.create', [
             'conversation' => $conversation[0],
-            'send_id'=> $_GET['user']
+            'user'=> $user[0]
         ]);
     }
 
@@ -110,7 +117,7 @@ class ConversationsController extends Controller
      */
     public function destroy(Conversation $conversation)
     {
-        //
+        dd('Deleted');
     }
 
     protected function verifyConversation($id) {

@@ -11845,10 +11845,6 @@ th {
 }
 
 @media screen and (max-width: 950px) {
-  .subscribebar {
-    max-width: 302px;
-  }
-
   .btn-subscribe {
     display: block;
     font-size: 16px;
@@ -11879,7 +11875,7 @@ th {
   }
 
   .subscribebar {
-    width: auto;
+    width: 217px;
   }
 
   .btn-subscribe {

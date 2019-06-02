@@ -49293,20 +49293,24 @@ var app = new Vue({
 (function () {
   // Handle the profile dropdown menu
   // =================================================================================
-  var trigger = document.querySelector('.signin--list');
-  var dropdown = document.querySelector('.dropdown');
+  var hover = document.querySelector('.hover-item');
 
-  function hoverProfileEnter(e) {
-    dropdown.style.display = 'block';
-  }
+  if (hover !== null) {
+    var hoverProfileEnter = function hoverProfileEnter(e) {
+      dropdown.style.display = 'block';
+    };
 
-  function hoverProfileLeave(e) {
-    dropdown.style.display = 'none';
-  }
+    var hoverProfileLeave = function hoverProfileLeave(e) {
+      dropdown.style.display = 'none';
+    };
 
-  trigger.addEventListener('mouseenter', hoverProfileEnter);
-  trigger.addEventListener('mouseleave', hoverProfileLeave); // Navigation Menu for mobile
+    var trigger = document.querySelector('.signin--list');
+    var dropdown = document.querySelector('.dropdown');
+    trigger.addEventListener('mouseenter', hoverProfileEnter);
+    trigger.addEventListener('mouseleave', hoverProfileLeave);
+  } // Navigation Menu for mobile
   // =================================================================================
+
 
   var menuBarButton = document.querySelector('.hamburger-header');
   var mobileNavMenu = document.querySelector('.mobile--navmenu');

@@ -38,19 +38,23 @@ const app = new Vue({
     // Handle the profile dropdown menu
     // =================================================================================
 
-    const trigger = document.querySelector('.signin--list');
-    const dropdown = document.querySelector('.dropdown');
+    const hover = document.querySelector('.hover-item');
 
-    function hoverProfileEnter(e) {
-        dropdown.style.display = 'block';
+    if (hover !== null) {
+        const trigger = document.querySelector('.signin--list');
+        const dropdown = document.querySelector('.dropdown');
+    
+        function hoverProfileEnter(e) {
+            dropdown.style.display = 'block';
+        }
+    
+        function hoverProfileLeave(e) {
+            dropdown.style.display = 'none';    
+        }
+    
+        trigger.addEventListener('mouseenter', hoverProfileEnter);
+        trigger.addEventListener('mouseleave', hoverProfileLeave);
     }
-
-    function hoverProfileLeave(e) {
-        dropdown.style.display = 'none';    
-    }
-
-    trigger.addEventListener('mouseenter', hoverProfileEnter);
-    trigger.addEventListener('mouseleave', hoverProfileLeave);
 
     // Navigation Menu for mobile
     // =================================================================================
