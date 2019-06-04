@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Project;
 use App\User;
+use App\Favorite;
 
 class PagesController extends Controller
 {
@@ -49,6 +50,15 @@ class PagesController extends Controller
     public function users() {
         $users = User::orderBy('created_at', 'desc')->paginate(15);
         return view('pages.users', compact('users'));
+    }
+
+    public function favorites(Request $request) {
+        $user = User::where('id', $request['user'])->first();
+        if ($user == null) {
+            return redirect()->back();
+        }
+        $favorites = Favorite::where('owner_id', $request['user'])->paginate(40);
+        return view('pages.favorites', compact('user', 'favorites'));
     }
 
     public function random() {

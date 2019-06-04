@@ -12,7 +12,7 @@
     }
 }
   
-.post--image-container > img {
+.single-image {
     width: 100%;
 }
 
@@ -20,6 +20,13 @@
     background-color: transparent;
     border: 0;
     color: $green;
+    font-size: 20px;
+}
+
+.favorite-btn {
+    background-color: transparent;
+    border: 0;
+    color: $red;
     font-size: 20px;
 }
 

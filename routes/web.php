@@ -20,6 +20,7 @@ Route::get('/tos', 'PagesController@tos');
 Route::get('/faq', 'PagesController@faq');
 Route::get('/about', 'PagesController@about');
 Route::get('/users', 'PagesController@users');
+Route::get('/favorites', 'PagesController@favorites');
 Route::get('/random', 'PagesController@random');
 
 Auth::routes();
@@ -36,6 +37,9 @@ Route::post('/comment', 'CommentController@store');
 
 Route::post('/like', 'LikesController@store');
 Route::delete('/like/{like}', 'LikesController@destroy');
+
+Route::post('/favorite', 'favoritesController@store');
+Route::delete('/favorite/{favorite}', 'favoritesController@destroy');
 
 Route::resource('messages', 'ConversationsController');
 

@@ -5,7 +5,7 @@
     <div class="post-container">
         <h1>{{ $project->title }} <span>by</span> <a href="/profile/{{$project->owner->profile->id}}" class="text-light">{{ $project->owner->username }}</a></h1>
         <div class="post--image-container py-4">
-            <img src="/storage/images/uploads/{{ $project->owner->username }}/{{ $project->image }}" alt="upload">
+            <img src="/storage/images/uploads/{{ $project->owner->username }}/{{ $project->image }}" alt="upload" class="single-image">
         </div>
 
         @auth
@@ -43,6 +43,26 @@
                         </form>
                     </li>
                 @endif
+
+                @if (count(App\Favorite::where('owner_id', auth()->user()->id)->where('project_id', $project->id)->get()) == 0)
+                    <li>
+                        <form action="/favorite" method="post">
+                            @csrf
+                            <input type="hidden" name="project_id" value="{{ $project->id }}">
+                            <button class="favorite-btn" type="submit"><i class="far fa-heart"></i></button>
+                        </form>
+                    </li>
+                @else
+                    <li>
+                        <form action="/favorite/{{ App\Favorite::where('owner_id', auth()->user()->id)->where('project_id', $project->id)->get()[0]->id }}" method="post">
+                            @csrf
+                            @method('DELETE')
+                            
+                            <input type="hidden" name="project_id" value="{{ $project->id }}">
+                            <button class="favorite-btn" type="submit"><i class="fas fa-heart"></i></button>
+                        </form>
+                    </li>
+                @endif
             </ul>
         @endauth
 
@@ -51,9 +71,9 @@
         <p class="description">{{ $project->description }} </p>
 
         <div class="d-flex flex-row justify-content-between tag-container">
-            <p class="tags"><strong>Tags: </strong>{{ $project->tags }} </p>
-            <p class="tags"><strong>Likes: </strong>{{ $project->likes }} </p>
-            <p class="tags"><strong>Favorites: </strong> 0 </p>
+            <p class="tags"><strong>Tags: </strong>{{ $project->tags }}</p>
+            <p class="tags"><strong>Likes: </strong>{{ $project->likes }}</p>
+            <p class="tags"><strong>Favorites: </strong>{{ $project->favorites }}</p>
         </div>
 
         <div class="comments py-4">

@@ -11728,7 +11728,7 @@ input[type=file] {
   font-size: 30px;
 }
 
-.post--image-container > img {
+.single-image {
   width: 100%;
 }
 
@@ -11736,6 +11736,13 @@ input[type=file] {
   background-color: transparent;
   border: 0;
   color: #38c172;
+  font-size: 20px;
+}
+
+.favorite-btn {
+  background-color: transparent;
+  border: 0;
+  color: #e3342f;
   font-size: 20px;
 }
 
