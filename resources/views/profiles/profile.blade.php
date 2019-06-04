@@ -21,6 +21,18 @@
                 <p> {{ $profile->location }} </p>
                 <p> {{ $profile->description }} </p>
             </div>
+            @auth
+                @if (Auth::user()->id !== $profile->owner->id)
+                    <a href="/messages/create?user={{ $profile->owner->id }}" class="text-white banner-button banner-button-message btn btn-primary follow-btn">Follow</a>
+                @endif
+            @endauth
+        </div>
+
+        <div class="profile-links d-flex justify-content-center">
+            <ul class="profile-links--list d-flex py-2 px-5">
+                <a href="#" class="text-light"><li class="profile-links--listitem">Favorites</li></a>
+                <a href="#" class="text-light ml-3"><li class="profile-links--listitem">Followers</li></a>
+            </ul>
         </div>
         <div class="gallery">
 

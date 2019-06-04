@@ -49288,122 +49288,7 @@ Vue.component('example-component', __webpack_require__(/*! ./components/ExampleC
 
 var app = new Vue({
   el: '#app'
-}); // Vanilla JS
-
-(function () {
-  // Handle the profile dropdown menu
-  // =================================================================================
-  var hover = document.querySelector('.hover-item');
-
-  if (hover !== null) {
-    var hoverProfileEnter = function hoverProfileEnter(e) {
-      dropdown.style.display = 'block';
-    };
-
-    var hoverProfileLeave = function hoverProfileLeave(e) {
-      dropdown.style.display = 'none';
-    };
-
-    var trigger = document.querySelector('.signin--list');
-    var dropdown = document.querySelector('.dropdown');
-    trigger.addEventListener('mouseenter', hoverProfileEnter);
-    trigger.addEventListener('mouseleave', hoverProfileLeave);
-  } // Navigation Menu for mobile
-  // =================================================================================
-
-
-  var menuBarButton = document.querySelector('.hamburger-header');
-  var mobileNavMenu = document.querySelector('.mobile--navmenu');
-  window.onresize = throttle(function () {
-    checkWindowSize();
-  }, 100); //Removes open mobile menu if window is resized above media query limit for mobile
-
-  function checkWindowSize() {
-    if (window.innerWidth > 950) {
-      mobileNavMenu.style.display = 'none';
-    }
-  } //Toggle menu open and closed
-
-
-  function toggleMenu() {
-    if (mobileNavMenu.style.display == '' || mobileNavMenu.style.display == 'none') {
-      mobileNavMenu.style.display = 'block';
-    } else {
-      mobileNavMenu.style.display = 'none';
-    }
-  }
-
-  menuBarButton.addEventListener('click', toggleMenu); //Limits calls to checkWindowResize
-
-  function throttle(func, limit) {
-    var lastFunc;
-    var lastRan;
-    return function () {
-      var context = this;
-      var args = arguments;
-
-      if (!lastRan) {
-        func.apply(context, args);
-        lastRan = Date.now();
-      } else {
-        clearTimeout(lastFunc);
-        lastFunc = setTimeout(function () {
-          if (Date.now() - lastRan >= limit) {
-            func.apply(context, args);
-            lastRan = Date.now();
-          }
-        }, limit - (Date.now() - lastRan));
-      }
-    };
-  } // Display filename for uploaded images in upload.php
-  // =================================================================================
-
-
-  var fileUploadInput = document.querySelector('#image');
-  var fileName = document.querySelector('.filename');
-
-  function addFileTitle(e) {
-    fileName.innerText = this.files[0].name;
-  }
-
-  if (fileUploadInput != null) {
-    fileUploadInput.addEventListener('change', addFileTitle);
-  } //Banner
-
-
-  var fileUploadInput2 = document.querySelector('#image2');
-  var fileName2 = document.querySelector('.filename2');
-
-  function addFileTitle2(e) {
-    fileName2.innerText = this.files[0].name;
-  }
-
-  if (fileUploadInput2 != null) {
-    fileUploadInput2.addEventListener('change', addFileTitle2);
-  } // Handles API call
-  // =================================================================================
-
-
-  function getClassicalImages() {
-    var classicPost = document.querySelector('.post-container');
-    var index = Math.floor(Math.random() * 60000);
-    fetch('https://collectionapi.metmuseum.org/public/collection/v1/objects/' + index).then(function (res) {
-      return res.json();
-    }).then(function (data) {
-      if (data.primaryImage == "" || data.primaryImage == undefined) getClassicalImages();else {
-        var info = "        \n                        <h1>".concat(data.title, "</h1>\n                        <h4>Date</h4>\n                        <div class=\"post--image-container\">\n                            <img src=\"").concat(data.primaryImage, "\" alt=\"upload\">\n                        </div>\n                        <h4>Description</h4>\n                        <p class=\"description\"><strong>Artist: </strong>").concat(data.constituents ? data.constituents[0].name : "N/A", "</p>\n                        <p class=\"description\"><strong>Medium: </strong>").concat(data.medium ? data.medium : "N/A", "</p>\n                        <p class=\"description\"><strong>Location: </strong>").concat(data.repository ? data.repository : "N/A", "</p>\n                        <p class=\"description\"><strong>Category: </strong>").concat(data.classification ? data.classification : "N/A", "</p>\n                        <p class=\"description\"><strong>Cultural Origin: </strong>").concat(data.culture ? data.culture : "N/A", "</p>\n                        <p class=\"tags\">View another randomly selected art piece courtesy of the Metropolitan Museum of Art.</p>\n                        <p class=\"tags\"><a href=\"/random\" rel=\"\"><strong>New art piece</strong></a></p>\n                        ");
-        classicPost.innerHTML = info;
-      }
-    });
-  }
-
-  var pages = document.URL.split('/');
-  var page = pages[pages.length - 1]; //Checks that the user is on the submissions/index page
-
-  if (page === 'random') {
-    getClassicalImages();
-  }
-})();
+});
 
 /***/ }),
 
@@ -49534,6 +49419,130 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/vanilla.js":
+/*!*********************************!*\
+  !*** ./resources/js/vanilla.js ***!
+  \*********************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+(function () {
+  // Handle the profile dropdown menu
+  // =================================================================================
+  var hover = document.querySelector('.hover-item');
+
+  if (hover !== null) {
+    var hoverProfileEnter = function hoverProfileEnter(e) {
+      dropdown.style.display = 'block';
+    };
+
+    var hoverProfileLeave = function hoverProfileLeave(e) {
+      dropdown.style.display = 'none';
+    };
+
+    var trigger = document.querySelector('.signin--list');
+    var dropdown = document.querySelector('.dropdown');
+    trigger.addEventListener('mouseenter', hoverProfileEnter);
+    trigger.addEventListener('mouseleave', hoverProfileLeave);
+  } // Navigation Menu for mobile
+  // =================================================================================
+
+
+  var menuBarButton = document.querySelector('.hamburger-header');
+  var mobileNavMenu = document.querySelector('.mobile--navmenu');
+  window.onresize = throttle(function () {
+    checkWindowSize();
+  }, 100); //Removes open mobile menu if window is resized above media query limit for mobile
+
+  function checkWindowSize() {
+    if (window.innerWidth > 950) {
+      mobileNavMenu.style.display = 'none';
+    }
+  } //Toggle menu open and closed
+
+
+  function toggleMenu() {
+    if (mobileNavMenu.style.display == '' || mobileNavMenu.style.display == 'none') {
+      mobileNavMenu.style.display = 'block';
+    } else {
+      mobileNavMenu.style.display = 'none';
+    }
+  }
+
+  menuBarButton.addEventListener('click', toggleMenu); //Limits calls to checkWindowResize
+
+  function throttle(func, limit) {
+    var lastFunc;
+    var lastRan;
+    return function () {
+      var context = this;
+      var args = arguments;
+
+      if (!lastRan) {
+        func.apply(context, args);
+        lastRan = Date.now();
+      } else {
+        clearTimeout(lastFunc);
+        lastFunc = setTimeout(function () {
+          if (Date.now() - lastRan >= limit) {
+            func.apply(context, args);
+            lastRan = Date.now();
+          }
+        }, limit - (Date.now() - lastRan));
+      }
+    };
+  } // Display filename for uploaded images in upload.php
+  // =================================================================================
+
+
+  var fileUploadInput = document.querySelector('#image');
+  var fileName = document.querySelector('.filename');
+
+  function addFileTitle(e) {
+    fileName.innerText = this.files[0].name;
+  }
+
+  if (fileUploadInput != null) {
+    fileUploadInput.addEventListener('change', addFileTitle);
+  } //Banner
+
+
+  var fileUploadInput2 = document.querySelector('#image2');
+  var fileName2 = document.querySelector('.filename2');
+
+  function addFileTitle2(e) {
+    fileName2.innerText = this.files[0].name;
+  }
+
+  if (fileUploadInput2 != null) {
+    fileUploadInput2.addEventListener('change', addFileTitle2);
+  } // Handles API call
+  // =================================================================================
+
+
+  function getClassicalImages() {
+    var classicPost = document.querySelector('.post-container');
+    var index = Math.floor(Math.random() * 60000);
+    fetch('https://collectionapi.metmuseum.org/public/collection/v1/objects/' + index).then(function (res) {
+      return res.json();
+    }).then(function (data) {
+      if (data.primaryImage == "" || data.primaryImage == undefined) getClassicalImages();else {
+        var info = "        \n                        <h1>".concat(data.title, "</h1>\n                        <h4>Date</h4>\n                        <div class=\"post--image-container\">\n                            <img src=\"").concat(data.primaryImage, "\" alt=\"upload\">\n                        </div>\n                        <h4>Description</h4>\n                        <p class=\"description\"><strong>Artist: </strong>").concat(data.constituents ? data.constituents[0].name : "N/A", "</p>\n                        <p class=\"description\"><strong>Medium: </strong>").concat(data.medium ? data.medium : "N/A", "</p>\n                        <p class=\"description\"><strong>Location: </strong>").concat(data.repository ? data.repository : "N/A", "</p>\n                        <p class=\"description\"><strong>Category: </strong>").concat(data.classification ? data.classification : "N/A", "</p>\n                        <p class=\"description\"><strong>Cultural Origin: </strong>").concat(data.culture ? data.culture : "N/A", "</p>\n                        <p class=\"tags\">View another randomly selected art piece courtesy of the Metropolitan Museum of Art.</p>\n                        <p class=\"tags\"><a href=\"/random\" rel=\"\"><strong>New art piece</strong></a></p>\n                        ");
+        classicPost.innerHTML = info;
+      }
+    });
+  }
+
+  var pages = document.URL.split('/');
+  var page = pages[pages.length - 1]; //Checks that the user is on the submissions/index page
+
+  if (page === 'random') {
+    getClassicalImages();
+  }
+})();
+
+/***/ }),
+
 /***/ "./resources/sass/app.scss":
 /*!*********************************!*\
   !*** ./resources/sass/app.scss ***!
@@ -49546,13 +49555,14 @@ __webpack_require__.r(__webpack_exports__);
 /***/ }),
 
 /***/ 0:
-/*!*************************************************************!*\
-  !*** multi ./resources/js/app.js ./resources/sass/app.scss ***!
-  \*************************************************************/
+/*!***************************************************************************************!*\
+  !*** multi ./resources/js/app.js ./resources/js/vanilla.js ./resources/sass/app.scss ***!
+  \***************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(/*! D:\xampp\htdocs\laravel\image-gallery\resources\js\app.js */"./resources/js/app.js");
+__webpack_require__(/*! D:\xampp\htdocs\laravel\image-gallery\resources\js\vanilla.js */"./resources/js/vanilla.js");
 module.exports = __webpack_require__(/*! D:\xampp\htdocs\laravel\image-gallery\resources\sass\app.scss */"./resources/sass/app.scss");
 
 

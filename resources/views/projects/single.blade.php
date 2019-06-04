@@ -52,7 +52,7 @@
 
         <div class="d-flex flex-row justify-content-between tag-container">
             <p class="tags"><strong>Tags: </strong>{{ $project->tags }} </p>
-            <p class="tags"><strong>Likes: </strong>{{ count($project->likes) }} </p>
+            <p class="tags"><strong>Likes: </strong>{{ $project->likes }} </p>
             <p class="tags"><strong>Favorites: </strong> 0 </p>
         </div>
 

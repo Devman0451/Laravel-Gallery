@@ -23,4 +23,8 @@ class Conversation extends Model
     public function sender() {
         return $this->hasOne('App\User', 'id', 'sender_id');
     }
+
+    public function receiver() {
+        return $this->hasOne('App\User', 'id', 'received_id');
+    }
 }

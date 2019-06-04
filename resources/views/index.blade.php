@@ -4,8 +4,8 @@
     
     <section class="imagelinks--container"> 
         <ul class="imagelinks--list">
-            <li><a href="" rel="">Lastest</a></li>
-            <li><a href="" rel="">Trending</a></li>
+            <li><a href="/" rel="">Lastest</a></li>
+            <li><a href="/trending" rel="">Trending</a></li>
             <li><a href="/random" rel="">Random</a></li>
         </ul>
     </section>
@@ -30,5 +30,12 @@
             @endforeach
         @endif
     </section>
-
+    @if (count($projects) == 0)
+    <div class="d-flex justify-content-center">
+        <p>No Results Found</p>
+    </div>   
+    @endif
+    <div class="mt-2">
+            {{$projects->links()}}
+    </div>
 @endsection

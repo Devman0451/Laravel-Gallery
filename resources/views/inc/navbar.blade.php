@@ -18,7 +18,7 @@
             <li><a href="/about" class="link--header">About</a></li>
             <li><a href="/users" class="link--header">Users</a></li>
             <li><a href="/faq" class="link--header">FAQ</a></li>
-            <form class="searchform" action="index.php" method="get">
+            <form class="searchform" action="/search" method="get">
                 
                 @csrf
                 <input class="searchbar--header" type="text" name="search" placeholder="Search...">

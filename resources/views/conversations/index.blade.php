@@ -34,6 +34,18 @@
                                 </form>    
                             </td>
                         @else
+                            <td><a href="/profile/{{ $conversation->received_id }}" class="text-light"><img src="{{  $conversation->receiver->profile->profile_img }}" alt="avatar" class="profile-icon"></a></td>
+                            <td><a href="/profile/{{ $conversation->received_id }}" class="text-light">{{ $conversation->receiver->username }}</a></td>
+                            <td class="text-truncate">{{ $conversation->latestMessage->message }}</td>
+                            <td>{{ $conversation->created_at }}</td>
+                            <td><a href="/messages/create?user={{ $conversation->received_id }}" class="text-white btn btn-success message-btn">Message</a>
+                                <form action="/messages/{{ $conversation->id }}" method="post" class="d-inline-block">
+                                    @csrf
+                                    @method('DELETE')
+
+                                    <button type="submit" class="text-white btn btn-danger delete-btn">Delete</button>    
+                                </form>    
+                            </td>
                         @endif
 
                     </tr>

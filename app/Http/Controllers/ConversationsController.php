@@ -25,7 +25,6 @@ class ConversationsController extends Controller
                                     ->orWhere('received_id', auth()->user()->id)
                                     ->get();
 
-
         return view('conversations.index', compact('conversations'));
     }
 

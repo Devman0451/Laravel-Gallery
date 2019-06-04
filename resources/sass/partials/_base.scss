@@ -49,6 +49,17 @@ input[type="file"] {
   margin-top: 10px;
 }
 
+.page-link {
+  background-color: darken($dark-gray, 5%);
+  color: $light-gray;
+  border: 0;
+}
+
+.page-item.active .page-link {
+  background-color: white;
+  color: $dark-gray;
+}
+
 ::-webkit-scrollbar {
   width: 10px;
 }

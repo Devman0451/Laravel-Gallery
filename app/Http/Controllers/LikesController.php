@@ -35,6 +35,8 @@ class LikesController extends Controller
         if (count($like) == 0 && count($project) == 1) {
             $attributes['owner_id'] = auth()->user()->id;
             Like::create($attributes);
+            $likes = ['likes' => ++$project[0]->likes];
+            $project[0]->update( $likes);
         }
 
         return redirect()->back();
@@ -48,6 +50,9 @@ class LikesController extends Controller
      */
     public function destroy(Like $like)
     {
+        $project = Project::where('id', $like->project_id)->first();
+        $project->likes--;
+        $project->save();
         $like->delete();
         return redirect()->back();
     }

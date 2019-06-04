@@ -12,6 +12,8 @@
 */
 
 Route::get('/', 'PagesController@index');
+Route::get('/trending', 'PagesController@trending');
+Route::get('/search', 'PagesController@search');
 Route::get('/privacy', 'PagesController@privacy');
 Route::get('/support', 'PagesController@support');
 Route::get('/tos', 'PagesController@tos');

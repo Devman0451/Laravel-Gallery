@@ -11094,6 +11094,17 @@ input[type=file] {
   margin-top: 10px;
 }
 
+.page-link {
+  background-color: #111111;
+  color: #d2d2d2;
+  border: 0;
+}
+
+.page-item.active .page-link {
+  background-color: white;
+  color: #1e1e1e;
+}
+
 ::-webkit-scrollbar {
   width: 10px;
 }
@@ -11674,11 +11685,19 @@ input[type=file] {
   border: 0;
   top: 5px;
   right: 5px;
-  font-size: 20px;
+  font-size: 18px;
+}
+
+.banner-button-message {
+  right: 110px;
 }
 
 .message-btn {
   background-color: #38c172;
+}
+
+.follow-btn {
+  background-color: #3490dc;
 }
 
 .profile-info {
@@ -11689,6 +11708,10 @@ input[type=file] {
   border-radius: 50%;
   width: 100px;
   height: 100px;
+}
+
+.profile-links--list {
+  font-size: 16px;
 }
 
 .post-container {

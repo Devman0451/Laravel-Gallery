@@ -12,11 +12,19 @@
     border: 0;
     top: 5px;
     right: 5px;
-    font-size: 20px;
+    font-size: 18px;
+  }
+
+  .banner-button-message {
+      right: 110px;
   }
 
   .message-btn {
     background-color: $green;
+  }
+
+  .follow-btn {
+    background-color: $blue;
   }
   
   .profile-info {
@@ -27,4 +35,8 @@
     border-radius: 50%;
     width: 100px;
     height: 100px;
+  }
+
+  .profile-links--list {
+    font-size: 16px;
   }

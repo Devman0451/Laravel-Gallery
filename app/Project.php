@@ -16,8 +16,4 @@ class Project extends Model
         return $this->hasMany('App\Comment', 'project_id');
     }
 
-    public function likes() {
-        return $this->hasMany('App\Like', 'project_id');
-    }
-
 }
