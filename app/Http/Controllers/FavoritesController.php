@@ -24,11 +24,9 @@ class FavoritesController extends Controller
             'project_id' => 'required'
         ]);
 
-        $favorite = Favorite::where('owner_id', auth()->user()->id)
-                    ->where('project_id', $attributes['project_id'])
-                    ->get();
+        $favorite = Favorite::getUserFavorite($attributes['project_id'])->get();
 
-        $project = Project::where('id', $attributes['project_id'])->get();
+        $project = Project::projectByID($attributes['project_id'])->get();
 
         if (count($favorite) == 0 && count($project) == 1) {
             $attributes['owner_id'] = auth()->user()->id;
@@ -48,7 +46,7 @@ class FavoritesController extends Controller
      */
     public function destroy(Favorite $favorite)
     {
-        $project = Project::where('id', $favorite->project_id)->first();
+        $project = Project::projectByID($favorite->project_id)->first();
         $project->favorites--;
         $project->save();
         $favorite->delete();

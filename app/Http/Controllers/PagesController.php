@@ -10,19 +10,17 @@ use App\Favorite;
 class PagesController extends Controller
 {
     public function index() {
-        $projects = Project::orderBy('created_at', 'desc')->paginate(40);
+        $projects = Project::orderByDate()->paginate(40);
         return view('index', compact('projects'));
     }
 
     public function trending() {
-        $projects = Project::orderBy('likes', 'desc')->paginate(40);
+        $projects = Project::orderByLikes()->paginate(40);
         return view('index', compact('projects'));
     }
 
     public function search(Request $request) {
-        $projects = Project::where('tags', 'like', '%' . $request->search . '%')
-                            ->orWhere('title', 'like', '%' . $request->search . '%')
-                            ->paginate(40);
+        $projects = Project::searchTagsAndTitles($request->search)->paginate(40);
 
         return view('index', compact('projects'));
     }

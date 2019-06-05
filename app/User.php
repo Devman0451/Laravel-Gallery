@@ -64,4 +64,8 @@ class User extends Authenticatable
     public function received_conversations() {
         return $this->hasMany('App\Conversation', 'received_id');
     }
+
+    public function scopeGetByID($query, $param) {
+        return $query->where('id', $param);
+    }
 }

@@ -6,6 +6,8 @@ use App\Project;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
+use App\Http\Requests\ProjectStoreRequest;
+use App\Http\Requests\ProjectUpdateRequest;
 
 class ProjectsController extends Controller
 {
@@ -40,14 +42,9 @@ class ProjectsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ProjectStoreRequest $request)
     {
-        $attributes = $this->validate($request, [
-            'title' => 'required|max:100',
-            'description' => 'nullable',
-            'tags' => 'nullable',
-            'image' => 'required|image|max:2000'
-        ]);
+        $attributes = $request->validated();
 
         $fileNameToStore = processImage($request->file('image'), auth()->user()->username);
 
@@ -93,17 +90,13 @@ class ProjectsController extends Controller
      * @param  \App\Project  $project
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Project $project)
+    public function update(ProjectUpdateRequest $request, Project $project)
     {
         if(auth()->user()->id !== $project->owner_id) {
             return redirect('/')->with('error', 'Umauthorized Page');
         }
 
-        $attributes = $this->validate($request, [
-            'title' => 'required|max:100',
-            'description' => 'nullable',
-            'tags' => 'nullable',
-        ]);
+        $attributes = $request->validated();
 
         $project->update($attributes);
 
@@ -130,29 +123,4 @@ class ProjectsController extends Controller
         return redirect('/')->with('success', 'Post Deleted');
     }
 
-    //  /**
-    //  * Generate image and a thumbnail
-    //  *@param UploadedFile image file 
-    // * @param string username of the user uploading the image. 
-    //  * @return String
-    //  */
-    // protected function processImage($image, $username) {
-
-    //     $fileNameWithExt = $image->getClientOriginalName();
-    //     $fileName = pathinfo($fileNameWithExt, PATHINFO_FILENAME);
-    //     $extension = $image->getClientOriginalExtension();
-    //     $fileNameToStore = $fileName . '_' . uniqid('', true) . '.' . $extension;
-    //     $path = 'public/images/uploads/' . $username;
-    //     $image->storeAs($path, $fileNameToStore);
-
-    //     $thumbPath = public_path('storage/images/uploads/' . $username . '/thumbs');
-
-    //     if (!file_exists($thumbPath)) {
-    //         mkdir($thumbPath, 0777, true);
-    //     }
-
-    //     create_thumbnail($image->path(), $extension, $thumbPath . '/' . $fileNameToStore);
-
-    //     return $fileNameToStore;
-    // }
 }

@@ -15,4 +15,9 @@ class Favorite extends Model
     public function owner() {
         return $this->belongsTo('App\User');
     }
+
+    public function scopeGetUserFavorite($query, $param) {
+        return $query->where('owner_id', auth()->user()->id)
+                    ->where('project_id', $param);
+    }
 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Profile;
 use App\User;
 use Illuminate\Http\Request;
+use App\Http\Requests\ProfileUpdateRequest;
 
 class ProfilesController extends Controller
 {
@@ -70,8 +71,6 @@ class ProfilesController extends Controller
      */
     public function show(Profile $profile)
     {
-        // $user = User::find($profile->owner_id);
-
         return view('profiles.profile', compact('profile'));
     }
 
@@ -93,18 +92,13 @@ class ProfilesController extends Controller
      * @param  \App\Profile  $profile
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Profile $profile)
+    public function update(ProfileUpdateRequest $request, Profile $profile)
     {
         if(auth()->user()->id !== $profile->owner_id) {
             return redirect('/')->with('error', 'Umauthorized Page');
         }
 
-        $attributes = $this->validate($request, [
-            'location' => 'nullable|max:50',
-            'description' => 'nullable',
-            'profile_img' => 'image|nullable|max:200|dimensions:width=100,height=100',
-            'banner_img' => 'image|nullable|max:2000|dimensions:width=1920,height=365'
-        ]);
+        $attributes = $request->validated();
 
         if ($request->hasFile('profile_img')) {
             if($profile->profile_img !== '/storage/images/static/default.jpg') {

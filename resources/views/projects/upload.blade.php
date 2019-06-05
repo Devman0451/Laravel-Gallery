@@ -10,14 +10,14 @@
             @csrf
 
             <label for="title">Title</label>
-            <input type="text" name="title">
+            <input type="text" name="title" value="{{ old('title') }}">
             <label for="tags">Tags</label>
-            <input type="text" name="tags">
+            <input type="text" name="tags" value="{{ old('tags') }}">
             <label for="image" class="upload--fileupload">Select Image</label>
             <input type="file" name="image" id="image">
             <span class="filename">No File Selected</span>
             <label for="description">Description</label>
-            <textarea name="description" cols="30" rows="10"></textarea>
+            <textarea name="description" cols="30" rows="10">{{ old('description') }}</textarea>
             <input type="submit" name="submit" value="Upload" class="signup-btn">
         </form>
         

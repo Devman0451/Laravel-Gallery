@@ -21,9 +21,7 @@ class ConversationsController extends Controller
      */
     public function index()
     {
-        $conversations = Conversation::where('sender_id', auth()->user()->id)
-                                    ->orWhere('received_id', auth()->user()->id)
-                                    ->get();
+        $conversations = Conversation::findConversations()->get();
 
         return view('conversations.index', compact('conversations'));
     }
@@ -40,7 +38,7 @@ class ConversationsController extends Controller
         
         if ($conversation == null) return redirect('/messages');
 
-        $user = User::where('id', $_GET['user'])->get();
+        $user = User::getByID($_GET['user'])->get();
 
         return view('conversations.create', [
             'conversation' => $conversation[0],
@@ -69,7 +67,7 @@ class ConversationsController extends Controller
 
         Message::create($attributes);
 
-        $messages = Message::where('conversation_id', $conversation[0]->id);
+        // $messages = Message::where('conversation_id', $conversation[0]->id);
 
         return redirect()->back()->with('conversation', $conversation);
     }
@@ -124,17 +122,13 @@ class ConversationsController extends Controller
             return null;
         }
 
-        $to = User::where('id', $id)->get();
+        $to = User::getByID($id)->get();
 
         if (count($to) == 0) {
             return null;
         }
 
-        $conversation = Conversation::where('sender_id', auth()->user()->id)
-                                    ->where('received_id', $id)
-                                    ->orWhere('sender_id', $id)
-                                    ->where('received_id', auth()->user()->id)
-                                    ->get();
+        $conversation = Conversation::conversationExists($id)->get();
 
         if (count($conversation) == 0) {
             $conversation = Conversation::create([

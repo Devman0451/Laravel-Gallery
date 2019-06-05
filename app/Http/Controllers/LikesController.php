@@ -26,11 +26,9 @@ class LikesController extends Controller
             'project_id' => 'required'
         ]);
 
-        $like = Like::where('owner_id', auth()->user()->id)
-                    ->where('project_id', $attributes['project_id'])
-                    ->get();
+        $like = Like::getUserLike($attributes['project_id'])->get();
 
-        $project = Project::where('id', $attributes['project_id'])->get();
+        $project = Project::getByID($attributes['project_id'])->get();
 
         if (count($like) == 0 && count($project) == 1) {
             $attributes['owner_id'] = auth()->user()->id;
@@ -50,7 +48,7 @@ class LikesController extends Controller
      */
     public function destroy(Like $like)
     {
-        $project = Project::where('id', $like->project_id)->first();
+        $project = Project::projectByID($like->project_id)->first();
         $project->likes--;
         $project->save();
         $like->delete();
