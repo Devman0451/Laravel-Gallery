@@ -6,7 +6,7 @@
     <div class="signup--container">
         <h2>Upload Image</h2>
         
-        <form action="/projects" method="post" enctype="multipart/form-data" class="signup-form upload-form">
+        <form action="{{ route('projects.store') }}" method="post" enctype="multipart/form-data" class="signup-form upload-form">
             @csrf
 
             <label for="title">Title</label>
@@ -18,7 +18,7 @@
             <span class="filename">No File Selected</span>
             <label for="description">Description</label>
             <textarea name="description" cols="30" rows="10">{{ old('description') }}</textarea>
-            <input type="submit" name="submit" value="Upload" class="signup-btn">
+            <input type="submit" name="submit" value="Upload" class="btn auth-btn mt-2">
         </form>
         
     </div>

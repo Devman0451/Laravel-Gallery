@@ -10,7 +10,7 @@
                 <div class="message-title-header d-flex flex-row">
                     <img src="/storage/images/static/default.jpg" alt="profile" class="rounded-circle">
                     <div class="message-title-header--text mt-1 ml-3">
-                        <h4 class="text-left">Message with {{ $user->username }}</h4>
+                        <h4 class="text-left">Message with <a href="{{ route('profile.show', ['profile' => $user->profile]) }}" class="text-light">{{ $user->username }}</a></h4>
                         <h6>{{ count($conversation->messages)}} Messages</h6>
                     </div>
                 </div>
@@ -45,7 +45,7 @@
                 </div>
 
                 <div class="message-form-container">
-                    <form action="/messages?user={{ $user->id }}" method="post" class="message-form d-flex flex-row">
+                    <form action="{{ route('messages.store') }}?user={{ $user->id }}" method="post" class="message-form d-flex flex-row">
                         @csrf
                         <textarea class="message-textarea" name="message" cols="30" rows="10" placeholder="Type your message"></textarea>
                         <button type="submit" class="text-white message-btn-send"><i class="fas fa-paper-plane"></i></button>

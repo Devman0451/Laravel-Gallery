@@ -26,7 +26,7 @@ class FavoritesController extends Controller
 
         $favorite = Favorite::getUserFavorite($attributes['project_id'])->get();
 
-        $project = Project::projectByID($attributes['project_id'])->get();
+        $project = Project::getByID($attributes['project_id'])->get();
 
         if (count($favorite) == 0 && count($project) == 1) {
             $attributes['owner_id'] = auth()->user()->id;
@@ -46,7 +46,7 @@ class FavoritesController extends Controller
      */
     public function destroy(Favorite $favorite)
     {
-        $project = Project::projectByID($favorite->project_id)->first();
+        $project = Project::getByID($favorite->project_id)->first();
         $project->favorites--;
         $project->save();
         $favorite->delete();

@@ -4,13 +4,13 @@
     
     <section class="imagelinks--container"> 
         <ul class="imagelinks--list">
-            <li><a href="/profile/{{ $user->id }}" class="m-0">{{ $user->username }}'s</a> Favorites</li>
+            <li><a href="{{ route('profile.show', ['profile' => $user->profile]) }}" class="m-0">{{ $user->username }}'s</a> Favorites</li>
         </ul>
     </section>
     <section class="gallery">
         @if (count($favorites) > 0)
             @foreach ($favorites as $favorite)
-            <a href="/projects/{{ $favorite->project->id }}" class="image-link">
+            <a href="{{ route('projects.show', ['project' => $favorite->project]) }}" class="image-link">
                     <div class="project">
                         <div class="overlay">
                             <div class="info">

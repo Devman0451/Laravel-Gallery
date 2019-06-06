@@ -3,7 +3,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 80%;
+    max-width: 80%;
     margin: 0 auto;
 
     & span {
@@ -39,6 +39,7 @@
     margin: 0;
     padding: 10px 0;
     width: 100%;
+    word-break: break-all;
 }
   
 .comments {

@@ -23,8 +23,9 @@
         @else
 
             <li><a href="" class="link--header">{{ Auth::user()->username }}</a></li>
-            <li><a href="edit_profile.php" class="link--header">Edit Profile</a></li>
-            <li><a href="/projects/create" class="link--header">Upload</a></li>
+            <li><a href="{{ route('messages.index') }}" class="link--header">Messages</a></li>
+            <li><a href="{{ route('profile.edit', ['profile' => Auth::user()->profile]) }}" class="link--header">Edit</a></li>
+            <li><a href="{{ route('projects.create') }}" class="link--header">Upload</a></li>
             <li>
             <a class="link--header" href="{{ route('logout') }}"
                     onclick="event.preventDefault();

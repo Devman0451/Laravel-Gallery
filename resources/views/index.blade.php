@@ -13,7 +13,7 @@
     <section class="gallery">
         @if (count($projects) > 0)
             @foreach ($projects as $project)
-            <a href="/projects/{{ $project->id }}" class="image-link">
+            <a href="{{ route('projects.show', ['project' => $project]) }}" class="image-link">
                     <div class="project">
                         <div class="overlay">
                             <div class="info">

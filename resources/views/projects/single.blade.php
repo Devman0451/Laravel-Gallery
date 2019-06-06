@@ -3,7 +3,7 @@
 @section('content')
 <section class="post py-4">
     <div class="post-container">
-        <h1>{{ $project->title }} <span>by</span> <a href="/profile/{{$project->owner->profile->id}}" class="text-light">{{ $project->owner->username }}</a></h1>
+        <h1>{{ $project->title }} <span>by</span> <a href="{{ route('profile.show', ['profile' => $project->owner->profile]) }}" class="text-light">{{ $project->owner->username }}</a></h1>
         <div class="post--image-container py-4">
             <img src="/storage/images/uploads/{{ $project->owner->username }}/{{ $project->image }}" alt="upload" class="single-image">
         </div>
@@ -11,9 +11,9 @@
         @auth
             @if(auth()->user()->id === $project->owner_id)
                 <ul class="list-group d-flex flex-row">
-                    <li class="px-2"><a href="/projects/{{ $project->id }}/edit" class="btn btn-dark">Edit</a></li>
+                    <li class="px-2"><a href="{{ route('projects.edit', ['project' => $project]) }}" class="btn btn-dark">Edit</a></li>
                     <li class="px-2">
-                        <form action="/projects/{{ $project->id }}" method="post">
+                        <form action="{{ route('projects.destroy', ['project' => $project]) }}" method="post">
                             @csrf
                             @method('DELETE')
 
@@ -24,9 +24,9 @@
             @endif
 
             <ul class="list-group d-flex flex-row mt-2">
-                @if (count(App\Like::where('owner_id', auth()->user()->id)->where('project_id', $project->id)->get()) == 0)
+                @if (count(App\Like::getUserLike($project->id)->get()) == 0)
                     <li>
-                        <form action="/like" method="post">
+                        <form action="{{ route('like.store') }}" method="post">
                             @csrf
                             <input type="hidden" name="project_id" value="{{ $project->id }}">
                             <button class="like-btn" type="submit"><i class="far fa-thumbs-up"></i></button>
@@ -34,7 +34,7 @@
                     </li>
                 @else
                     <li>
-                        <form action="/like/{{ App\Like::where('owner_id', auth()->user()->id)->where('project_id', $project->id)->get()[0]->id }}" method="post">
+                        <form action="{{ route('like.destroy', ['like' => App\Like::getUserLike($project->id)->first()]) }}" method="post">
                             @csrf
                             @method('DELETE')
                             
@@ -44,9 +44,9 @@
                     </li>
                 @endif
 
-                @if (count(App\Favorite::where('owner_id', auth()->user()->id)->where('project_id', $project->id)->get()) == 0)
+                @if (count(App\Favorite::getUserFavorite($project->id)->get()) == 0)
                     <li>
-                        <form action="/favorite" method="post">
+                        <form action=" {{ route('favorite.store')}} " method="post">
                             @csrf
                             <input type="hidden" name="project_id" value="{{ $project->id }}">
                             <button class="favorite-btn" type="submit"><i class="far fa-heart"></i></button>
@@ -54,7 +54,7 @@
                     </li>
                 @else
                     <li>
-                        <form action="/favorite/{{ App\Favorite::where('owner_id', auth()->user()->id)->where('project_id', $project->id)->get()[0]->id }}" method="post">
+                        <form action="\{{ route('favorite.destroy', ['favorite' => App\Favorite::getUserFavorite($project->id)->first()]) }}" method="post">
                             @csrf
                             @method('DELETE')
                             
@@ -84,7 +84,7 @@
                 @foreach($project->comments as $comment)
                     <li>
                         <div class="comment-single pt-1">
-                            <p><a href="/profile/{{ $comment->owner->profile->id }}" class="text-light">{{ $comment->owner->username }}</a><span> on </span> {{ $comment->created_at->format('m-d-Y H:i:s') }}</p>
+                            <p><a href="{{ route('profile.show', ['profile' => $comment->owner->profile]) }}" class="text-light">{{ $comment->owner->username }}</a><span> on </span> {{ $comment->created_at->format('m-d-Y H:i:s') }}</p>
                             <p>{{ $comment->comment }}</p>
                         </div>
                     </li>
@@ -95,7 +95,7 @@
         </div>
 
         @auth
-            <form action="/comment?project={{ $project->id }}" method="post" class="comment-form">
+            <form action="{{ route('comment.store') }}?project={{ $project->id }}" method="post" class="comment-form">
                 @csrf
                 <textarea name="comment" cols="30" rows="10" class="comment"></textarea>
                 <input type="submit" name="submit" value="Submit" class="btn-subscribe">

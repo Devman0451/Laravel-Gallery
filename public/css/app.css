@@ -11125,6 +11125,10 @@ input[type=file] {
   display: none;
 }
 
+.mobile--navmenu .mobile--signin {
+  text-align: center;
+}
+
 .hamburger-header {
   display: none;
 }
@@ -11719,7 +11723,7 @@ input[type=file] {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 80%;
+  max-width: 80%;
   margin: 0 auto;
 }
 
@@ -11755,6 +11759,7 @@ input[type=file] {
   margin: 0;
   padding: 10px 0;
   width: 100%;
+  word-break: break-all;
 }
 
 .comments {
@@ -11792,6 +11797,11 @@ input[type=file] {
 
 .users {
   text-align: center;
+}
+
+.user-icon {
+  max-width: 40px;
+  max-height: 40px;
 }
 
 .users-container {

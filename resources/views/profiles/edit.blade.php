@@ -12,7 +12,7 @@
             @endforeach
         </ul>
 
-        <form action="/profile/{{ $profile->id }}" method="post" class="signup-form" enctype="multipart/form-data">
+        <form action="{{ route('profile.update', ['profile' => $profile]) }}" method="post" class="signup-form" enctype="multipart/form-data">
             @csrf
             @method('PATCH')
 

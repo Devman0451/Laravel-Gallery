@@ -4,7 +4,7 @@
     <section class="signup">
         <div class="signup--container py-4">
             <h2>Edit Submission</h2>
-            <form action="/projects/{{ $project->id }}" method="post" class="signup-form upload-form">
+            <form action="{{ route('projects.update', ['project' => $project]) }}" method="post" class="signup-form upload-form">
                 @csrf
                 @method('PATCH')
     
@@ -14,7 +14,7 @@
                 <input type="text" name="tags" value="{{ $project->tags }}">
                 <label for="description">Description</label>
                 <textarea name="description" cols="30" rows="10">{{ $project->description }}</textarea>
-                <input type="submit" name="submit" value="Upload" class="signup-btn">
+                <input type="submit" name="submit" value="Upload" class="btn auth-btn mt-2">
             </form>
         </div>
     </section>

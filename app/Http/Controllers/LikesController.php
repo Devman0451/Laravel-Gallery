@@ -48,7 +48,7 @@ class LikesController extends Controller
      */
     public function destroy(Like $like)
     {
-        $project = Project::projectByID($like->project_id)->first();
+        $project = Project::getByID($like->project_id)->first();
         $project->likes--;
         $project->save();
         $like->delete();
