@@ -47,25 +47,26 @@ class PagesController extends Controller
     }
 
     public function users() {
-        $users = User::orderBy('created_at', 'desc')->paginate(15);
+        $users = User::getAllUsers();
         return view('pages.users', compact('users'));
     }
 
     public function favorites(Request $request) {
-        $user = User::where('id', $request['user'])->first();
+        $user = User::getOneUser($request['user']);
         if ($user == null) {
             return redirect()->back();
         }
-        $favorites = Favorite::where('owner_id', $request['user'])->paginate(40);
+        $favorites = Favorite::getFavorites($request['user']);
+
         return view('pages.favorites', compact('user', 'favorites'));
     }
 
     public function followers(Request $request) {
-        $user = User::where('id', $request['user'])->first();
+        $user = User::getOneUser($request['user']);
         if ($user == null) {
             return redirect()->back();
         }
-        $followers = Follower::where('followed_id', $request['user'])->paginate(40);
+        $followers = Follower::getAllFollowers($request['user']);
         return view('pages.followers', compact('user', 'followers'));
     }
 

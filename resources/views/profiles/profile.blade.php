@@ -19,7 +19,7 @@
             <div class="profile-info pb-3">
                 <h1> {{ $profile->owner->username }} </h1>
                 <p> {{ $profile->location }} </p>
-                <p> {{ $profile->description }} </p>
+                <p class="profile-description"> {{ $profile->description }} </p>
             </div>
             @auth
                 @if (Auth::user()->id !== $profile->owner->id)

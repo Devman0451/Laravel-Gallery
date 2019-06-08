@@ -14,6 +14,11 @@ class Follower extends Model
 
     public function scopeGetUserFollowing($query, $param) {
         return $query->where('follower_id', auth()->user()->id)
-                    ->where('followed_id', $param);
+                     ->where('followed_id', $param);
+    }
+
+    public function scopeGetAllFollowers($query, $param) {
+        return $query->where('followed_id', $param)
+                     ->paginate(40);
     }
 }

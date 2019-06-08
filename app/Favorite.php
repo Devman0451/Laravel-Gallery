@@ -20,4 +20,10 @@ class Favorite extends Model
         return $query->where('owner_id', auth()->user()->id)
                     ->where('project_id', $param);
     }
+
+    public function scopeGetFavorites($query, $param) {
+        return $query->with('project.owner.profile')
+                     ->where('owner_id', $param)
+                     ->paginate(40);
+    }
 }

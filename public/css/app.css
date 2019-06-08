@@ -11718,6 +11718,10 @@ input[type=file] {
   height: 100px;
 }
 
+.profile-description {
+  word-break: break-all;
+}
+
 .profile-links--list {
   font-size: 16px;
 }

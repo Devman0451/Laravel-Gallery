@@ -72,4 +72,15 @@ class User extends Authenticatable
     public function scopeGetByID($query, $param) {
         return $query->where('id', $param);
     }
+
+    public function scopeGetAllUsers($query) {
+        return $query->with('profile')
+                     ->orderBy('created_at', 'desc')
+                     ->paginate(15);
+    }
+
+    public function scopeGetOneUser($query, $param) {
+        return $query->where('id', $param)
+                     ->first();
+    }
 }

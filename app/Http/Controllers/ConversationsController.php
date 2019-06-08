@@ -58,16 +58,7 @@ class ConversationsController extends Controller
         
         if ($conversation == null) return redirect('/messages');
 
-        $attributes = $this->validate($request, [
-            'message' => 'required|min:1'
-        ]);
-
-        $attributes['sender_id'] = auth()->user()->id;
-        $attributes['conversation_id'] = $conversation[0]->id;
-
-        Message::create($attributes);
-
-        // $messages = Message::where('conversation_id', $conversation[0]->id);
+        $this->validateConversation($request, $conversation[0]->id);
 
         return redirect()->back()->with('conversation', $conversation);
     }
@@ -115,7 +106,9 @@ class ConversationsController extends Controller
     public function destroy(Conversation $conversation)
     {
         dd('Deleted');
+        $conversation->delete();
     }
+
 
     protected function verifyConversation($id) {
         if (!isset($id)) {
@@ -138,5 +131,16 @@ class ConversationsController extends Controller
         }
 
         return $conversation;
+    }
+
+    protected function validateConversation($request, $id) {
+        $attributes = $this->validate($request, [
+            'message' => 'required|min:1'
+        ]);
+
+        $attributes['sender_id'] = auth()->user()->id;
+        $attributes['conversation_id'] = $id;
+
+        Message::create($attributes);
     }
 }

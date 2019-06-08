@@ -17,15 +17,18 @@ class Project extends Model
     }
 
     public function scopeOrderByDate($query) {
-        return $query->orderBy('created_at', 'desc');
+        return $query->with('owner.profile')
+                     ->orderBy('created_at', 'desc');
     }
 
     public function scopeOrderByLikes($query) {
-        return $query->orderBy('likes', 'desc');
+        return $query->with('owner.profile')
+                     ->orderBy('likes', 'desc');
     }
 
     public function scopeSearchTagsAndTitles($query, $param) {
-        return $query->where('tags', 'like', '%' . $param . '%')
+        return $query->with('owner.profile')
+                     ->where('tags', 'like', '%' . $param . '%')
                      ->orWhere('title', 'like', '%' . $param . '%');
     }
 

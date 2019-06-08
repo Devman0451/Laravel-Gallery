@@ -8,7 +8,7 @@
             <div class="col-11 m-auto message-container">
 
                 <div class="message-title-header d-flex flex-row">
-                    <img src="/storage/images/static/default.jpg" alt="profile" class="rounded-circle">
+                    <a href="{{ route('profile.show', ['profile' => $user->profile]) }}"><img src="{{ $user->profile->profile_img }}" alt="profile" class="rounded-circle"></a>
                     <div class="message-title-header--text mt-1 ml-3">
                         <h4 class="text-left">Message with <a href="{{ route('profile.show', ['profile' => $user->profile]) }}" class="text-light">{{ $user->username }}</a></h4>
                         <h6>{{ count($conversation->messages)}} Messages</h6>
@@ -24,7 +24,7 @@
                             @if(auth()->user()->id == $message->sender_id)
                                 <div class="message-user-message">
                                     <div class="message-title-header--text mt-2 d-flex flex-row">
-                                        <img src="/storage/images/static/default.jpg" alt="profile" class="rounded-circle message-img">
+                                        <img src="{{ auth()->user()->profile->profile_img }}" alt="profile" class="rounded-circle message-img">
                                         <p class="text-left message-user-text">{{ $message->message }}</p>
                                     </div>
                                     <p class="text-left message-user-date"><span class="message-date">{{ $message->created_at }}</span></p>
@@ -33,7 +33,7 @@
                                 <div class="message-user-message foreign-message">
                                     <div class="message-title-header--text mt-1 d-flex flex-row foreign-user">
                                         <p class="text-left message-user-text foreign-text">{{ $message->message }}</p>
-                                        <img src="/storage/images/static/default.jpg" alt="profile" class="rounded-circle message-img">
+                                        <img src="{{ $user->profile->profile_img }}" alt="profile" class="rounded-circle message-img">
                                     </div>
                                     <p class="text-right message-user-date"><span class="message-date">{{ $message->created_at }}</span></p>
                                 </div>

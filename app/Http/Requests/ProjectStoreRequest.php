@@ -24,10 +24,20 @@ class ProjectStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'title' => 'required|max:100',
+            'title' => 'required|max:60',
             'description' => 'nullable',
             'tags' => 'nullable',
             'image' => 'required|image|max:2000'
+        ];
+    }
+
+    public function messages() {
+        return [
+            'title.required' => 'You need a title for the project',
+            'title.max' => 'Title is too long',
+            'image.required' => 'Image is required',
+            'image.image' => 'Must be an image file',
+            'image.max' => 'Image must be < 2MB'
         ];
     }
 }

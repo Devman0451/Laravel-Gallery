@@ -115,7 +115,7 @@
                         <h1>${data.title}</h1>
                         <h4>Date</h4>
                         <div class="post--image-container">
-                            <img src="${data.primaryImage}" alt="upload" style='max-width: 100vw;'>
+                            <img src="${data.primaryImage}" alt="upload" style='max-width: 60vw;'>
                         </div>
                         <h4>Description</h4>
                         <p class="description"><strong>Artist: </strong>${data.constituents ? data.constituents[0].name : "N/A"}</p>
