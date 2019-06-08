@@ -11,7 +11,7 @@
                     <a href="{{ route('profile.show', ['profile' => $user->profile]) }}"><img src="{{ $user->profile->profile_img }}" alt="profile" class="rounded-circle"></a>
                     <div class="message-title-header--text mt-1 ml-3">
                         <h4 class="text-left">Message with <a href="{{ route('profile.show', ['profile' => $user->profile]) }}" class="text-light">{{ $user->username }}</a></h4>
-                        <h6>{{ count($conversation->messages)}} Messages</h6>
+                        <h6>{{ count($conversation->messages) }} Messages</h6>
                     </div>
                 </div>
 

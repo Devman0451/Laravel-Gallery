@@ -29,7 +29,8 @@ class Conversation extends Model
     }
 
     public function scopeFindConversations($query) {
-        return $query->where('sender_id', auth()->user()->id)
+        return $query->with(['sender.profile', 'receiver.profile'])
+                     ->where('sender_id', auth()->user()->id)
                      ->orWhere('received_id', auth()->user()->id);
     }
 

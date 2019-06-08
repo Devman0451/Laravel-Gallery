@@ -41,7 +41,7 @@ class ConversationsController extends Controller
         $user = User::getByID($_GET['user'])->get();
 
         return view('conversations.create', [
-            'conversation' => $conversation[0],
+            'conversation' => $conversation,
             'user'=> $user[0]
         ]);
     }
@@ -58,7 +58,7 @@ class ConversationsController extends Controller
         
         if ($conversation == null) return redirect('/messages');
 
-        $this->validateConversation($request, $conversation[0]->id);
+        $this->validateConversation($request, $conversation->id);
 
         return redirect()->back()->with('conversation', $conversation);
     }
@@ -103,10 +103,10 @@ class ConversationsController extends Controller
      * @param  \App\Conversation  $conversation
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Conversation $conversation)
+    public function destroy(Conversation $message)
     {
-        dd('Deleted');
-        $conversation->delete();
+        $message->delete();
+        return redirect()->back();
     }
 
 
@@ -121,13 +121,15 @@ class ConversationsController extends Controller
             return null;
         }
 
-        $conversation = Conversation::conversationExists($id)->get();
+        $conversation = Conversation::conversationExists($id)->first();
 
-        if (count($conversation) == 0) {
-            $conversation = Conversation::create([
+        if ($conversation == null) {
+            Conversation::create([
                 'sender_id' => auth()->user()->id,
                 'received_id' => $_GET['user']
             ]);
+
+            return $this->verifyConversation($id);
         }
 
         return $conversation;

@@ -76,9 +76,7 @@ class ProjectsController extends Controller
      */
     public function edit(Project $project)
     {
-        if (auth()->user()->id !== $project->owner_id) {
-            return redirect('/')->with('error', 'Unauthorized Page');
-        }
+        $this->authorize('update', $project);
 
         return view('projects.edit', compact('project'));
     }
@@ -92,9 +90,7 @@ class ProjectsController extends Controller
      */
     public function update(ProjectUpdateRequest $request, Project $project)
     {
-        if(auth()->user()->id !== $project->owner_id) {
-            return redirect('/')->with('error', 'Umauthorized Page');
-        }
+        $this->authorize('update', $project);
 
         $attributes = $request->validated();
 
@@ -111,9 +107,7 @@ class ProjectsController extends Controller
      */
     public function destroy(Project $project)
     {
-        if (auth()->user()->id !== $project->owner_id) {
-            return redirect('/')->with('error', 'Unauthorized Page');
-        }
+        $this->authorize('delete', $project);
 
         Storage::delete('public/images/uploads/' . auth()->user()->username . '/' . $project->image);
         Storage::delete('public/images/uploads/' . auth()->user()->username . '/thumbs/' . $project->image_thumb);

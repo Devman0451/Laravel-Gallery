@@ -83,6 +83,7 @@ class ProfilesController extends Controller
      */
     public function edit(Profile $profile)
     {
+        $this->authorize('update', $profile);
         return view('profiles.edit', compact('profile'));
     }
 
@@ -95,9 +96,7 @@ class ProfilesController extends Controller
      */
     public function update(ProfileUpdateRequest $request, Profile $profile)
     {
-        if(auth()->user()->id !== $profile->owner_id) {
-            return redirect('/')->with('error', 'Umauthorized Page');
-        }
+        $this->authorize('update', $profile);
 
         $attributes = $this->updateImage($request, $profile);
 
@@ -114,7 +113,7 @@ class ProfilesController extends Controller
      */
     public function destroy(Profile $profile)
     {
-        //
+        $this->authorize('delete', $profile);
     }
 
     /**
