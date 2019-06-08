@@ -11,18 +11,18 @@
 |
 */
 
-Route::get('/', 'PagesController@index');
-Route::get('/trending', 'PagesController@trending');
-Route::get('/search', 'PagesController@search');
-Route::get('/privacy', 'PagesController@privacy');
+Route::get('/', 'PagesController@index')->name('index');
+Route::get('/trending', 'PagesController@trending')->name('trending');
+Route::get('/search', 'PagesController@search')->name('search');
+Route::get('/privacy', 'PagesController@privacy')->name('privacy');
 Route::get('/support', 'PagesController@support')->name('support');
-Route::get('/tos', 'PagesController@tos');
-Route::get('/faq', 'PagesController@faq');
-Route::get('/about', 'PagesController@about');
-Route::get('/users', 'PagesController@users');
+Route::get('/tos', 'PagesController@tos')->name('tos');
+Route::get('/faq', 'PagesController@faq')->name('faq');
+Route::get('/about', 'PagesController@about')->name('about');
+Route::get('/users', 'PagesController@users')->name('users');
 Route::get('/favorites', 'PagesController@favorites')->name('favorites');
 Route::get('/followers', 'PagesController@followers')->name('followers');
-Route::get('/random', 'PagesController@random');
+Route::get('/random', 'PagesController@random')->name('random');
 
 Auth::routes();
 

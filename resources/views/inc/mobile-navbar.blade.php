@@ -1,14 +1,14 @@
 <section class="mobile--navmenu">
-    <form class="mobile--searchbar" action="" method="get">
+    <form class="mobile--searchbar" action="{{ route('search') }}" method="get">
         <input class="searchbar--header" type="text" name="search" placeholder="Search...">
         <input class="btn-hidden" type="submit">
     </form>
     <nav class="mobile--navbar">
         <ul class="list--header list--navbar">
-            <li><a href="/" class="link--header">Submissions</a></li>
-            <li><a href="/about" class="link--header">About</a></li>
-            <li><a href="/users" class="link--header">Users</a></li>
-            <li><a href="/faq" class="link--header">FAQ</a></li>
+            <li><a href="{{ route('index') }}" class="link--header">Submissions</a></li>
+            <li><a href="{{ route('about') }}" class="link--header">About</a></li>
+            <li><a href="{{ route('users') }}" class="link--header">Users</a></li>
+            <li><a href="{{ route('faq') }}" class="link--header">FAQ</a></li>
         </ul>
     </nav>
     <ul class="mobile--signin list--header signin--list">

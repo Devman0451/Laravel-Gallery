@@ -13,12 +13,12 @@
     <ul class="list--footer navbar--list">
         <li><span class="year">&copy; 2019</span> <span class="name">Justin Myers</span></li> 
         <li class="verticalbar">|</li>
-        <li><a href="/support" class="link--header">Support</a></li> 
+        <li><a href="{{ route('support') }}" class="link--header">Support</a></li> 
         <li class="verticalbar">|</li>
-        <li><a href="/tos" class="link--header">Terms of Service</a></li> 
+        <li><a href="{{ route('tos') }}" class="link--header">Terms of Service</a></li> 
         <li class="verticalbar">|</li>
-        <li><a href="/privacy" class="link--header">Privacy Policy</a></li> 
+        <li><a href="{{ route('privacy') }}" class="link--header">Privacy Policy</a></li> 
         <li class="verticalbar">|</li>
-        <li><a href="/faq" class="link--header">FAQ</a></li>
+        <li><a href="{{ route('faq') }}" class="link--header">FAQ</a></li>
     </ul>
 </footer>

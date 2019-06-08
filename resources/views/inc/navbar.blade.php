@@ -1,7 +1,7 @@
 <header class="container--header">
     <i class="hamburger-header fas fa-bars"></i>
     <div class="logo">
-        <a href="/">
+        <a href="{{ route('index') }}">
             <div class="Background">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 43 43" preserveAspectRatio="xMidYMin slice" id="svg4959" class="Logo">
                     <g transform="translate(-612.786 -770.862)" id="layer1">
@@ -14,11 +14,11 @@
 
     <nav class="navbar">
         <ul class="list--header navbar--list">
-            <li><a href="/" class="link--header">Submissions</a></li>
-            <li><a href="/about" class="link--header">About</a></li>
-            <li><a href="/users" class="link--header">Users</a></li>
-            <li><a href="/faq" class="link--header">FAQ</a></li>
-            <form class="searchform" action="/search" method="get">
+            <li><a href="{{ route('index') }}" class="link--header">Submissions</a></li>
+            <li><a href="{{ route('about') }}" class="link--header">About</a></li>
+            <li><a href="{{ route('users') }}" class="link--header">Users</a></li>
+            <li><a href="{{ route('faq') }}" class="link--header">FAQ</a></li>
+            <form class="searchform" action="{{ route('search') }}" method="get">
                 
                 @csrf
                 <input class="searchbar--header" type="text" name="search" placeholder="Search...">
