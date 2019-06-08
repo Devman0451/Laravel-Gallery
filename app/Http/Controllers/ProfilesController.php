@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Profile;
 use App\User;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 use App\Http\Requests\ProfileUpdateRequest;
 
@@ -98,6 +99,33 @@ class ProfilesController extends Controller
             return redirect('/')->with('error', 'Umauthorized Page');
         }
 
+        $attributes = $this->updateImage($request, $profile);
+
+        $profile->update($attributes);
+
+        return redirect('/profile/' . $profile->id)->with(compact('profile'));
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\Profile  $profile
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(Profile $profile)
+    {
+        //
+    }
+
+    /**
+     * Handle image update for profile
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Profile  $profile
+     * @return 
+     */
+
+    private function updateImage($request, $profile) {
         $attributes = $request->validated();
 
         if ($request->hasFile('profile_img')) {
@@ -116,19 +144,6 @@ class ProfilesController extends Controller
             $attributes['banner_img'] = profileImage($request->file('banner_img'), auth()->user()->username);
         }
 
-        $profile->update($attributes);
-
-        return redirect('/profile/' . $profile->id)->with(compact('profile'));
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Profile  $profile
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Profile $profile)
-    {
-        //
-    }
+        return $attributes;
+    }    
 }

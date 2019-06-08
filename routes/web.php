@@ -21,6 +21,7 @@ Route::get('/faq', 'PagesController@faq');
 Route::get('/about', 'PagesController@about');
 Route::get('/users', 'PagesController@users');
 Route::get('/favorites', 'PagesController@favorites')->name('favorites');
+Route::get('/followers', 'PagesController@followers')->name('followers');
 Route::get('/random', 'PagesController@random');
 
 Auth::routes();
@@ -38,8 +39,11 @@ Route::post('/comment', 'CommentController@store')->name('comment.store');
 Route::post('/like', 'LikesController@store')->name('like.store');
 Route::delete('/like/{like}', 'LikesController@destroy')->name('like.destroy');
 
-Route::post('/favorite', 'favoritesController@store')->name('favorite.store');
-Route::delete('/favorite/{favorite}', 'favoritesController@destroy')->name('favorite.destroy');
+Route::post('/favorite', 'FavoritesController@store')->name('favorite.store');
+Route::delete('/favorite/{favorite}', 'FavoritesController@destroy')->name('favorite.destroy');
+
+Route::post('/follower', 'FollowersController@store')->name('follower.store');
+Route::delete('/follower/{follower}', 'FollowersController@destroy')->name('follower.destroy');
 
 Route::resource('messages', 'ConversationsController');
 

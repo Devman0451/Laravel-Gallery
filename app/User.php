@@ -53,6 +53,10 @@ class User extends Authenticatable
         return $this->hasMany('App\Like', 'owner_id');
     }
 
+    public function followers() {
+        return $this->hasMany('App\Like', 'followed_id', 'id');
+    }
+
     public function sent_messages() {
         return $this->hasMany('App\Message', 'sender_id');
     }

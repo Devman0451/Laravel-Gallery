@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Project;
 use App\User;
 use App\Favorite;
+use App\Follower;
 
 class PagesController extends Controller
 {
@@ -57,6 +58,15 @@ class PagesController extends Controller
         }
         $favorites = Favorite::where('owner_id', $request['user'])->paginate(40);
         return view('pages.favorites', compact('user', 'favorites'));
+    }
+
+    public function followers(Request $request) {
+        $user = User::where('id', $request['user'])->first();
+        if ($user == null) {
+            return redirect()->back();
+        }
+        $followers = Follower::where('followed_id', $request['user'])->paginate(40);
+        return view('pages.followers', compact('user', 'followers'));
     }
 
     public function random() {
