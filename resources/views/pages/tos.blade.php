@@ -2,7 +2,7 @@
 
 @section('content')
 
-    <section class="signup tos">    
+    <section class="signup tos py-4">    
         <div class="signup--container termsofservice">
             <h2>Terms of Service</h2>
             <p>You must select a unique user name for your account. You must not use a user name that is, in our sole discretion, vulgar, offensive, defamatory, obscene, hateful or otherwise unlawful or objectionable. We may modify user names as we see fit.</p>

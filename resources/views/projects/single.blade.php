@@ -85,39 +85,40 @@
             @if (count($comments) > 0)
                 @foreach($comments as $comment)
                     <li>
-                        <div class="comment-single pt-1">
+                        {{-- <div class="comment-single pt-1">
                             <p><a href="{{ route('profile.show', ['profile' => $comment->owner->profile]) }}" class="text-light">{{ $comment->owner->username }}</a><span> on </span> {{ $comment->created_at->format('m-d-Y H:i:s') }}</p>
                             <p>{{ $comment->comment }}</p>
                             @can('update', $project)
                                 <button class="btn btn-dark reply-btn">Reply</button>
                             @endcan
-                        </div>
+                        </div> --}}
+                        @can('update', $project)
+                            <comment :comment="{{ $comment }}" :owner="true"></comment>
+                        @endcan
+
+                        @cannot('update', $project)
+                            <comment :comment="{{ $comment }}"></comment>
+                        @endcannot
                     </li>
-                    @can('update', $project)
-                        @auth
-                            <div class="reply-textbox">
-                                <form action="" method="post" class="comment-form">
-                                    @csrf
-                                    <textarea name="reply" cols="30" rows="10" class="comment"></textarea>
-                                    <input type="submit" name="submit" value="Reply" class="btn-subscribe">
-                                </form>
-                            </div>
-                        @endauth
-                    @endcan
+
                 @endforeach
             @else
                 <p>No Comments!</p>
             @endif
-
             </ul>
         </div>
 
         @auth
-            <form action="{{ route('comment.store') }}?project={{ $project->id }}" method="post" class="comment-form">
+        <add-comment :buttontext="'Comment'" 
+                     :name="'comment'" 
+                     :endpoint="'/comment?project={{ $project->id }}'"
+                     ></add-comment>
+
+            {{-- <form action="{{ route('comment.store') }}?project={{ $project->id }}" method="post" class="comment-form">
                 @csrf
                 <textarea name="comment" cols="30" rows="10" class="comment"></textarea>
                 <input type="submit" name="submit" value="Submit" class="btn-subscribe">
-            </form>
+            </form> --}}
         @endauth
 
     </div>

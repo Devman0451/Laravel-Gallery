@@ -11804,12 +11804,6 @@ input[type=file] {
   width: 100%;
 }
 
-.reply-btn {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-}
-
 .users {
   text-align: center;
 }
@@ -11878,10 +11872,15 @@ th {
   transition: all 200ms ease-in-out;
 }
 
-.btn-subscribe:hover {
+.btn-subscribe:hover:enabled {
   background-color: #d2d2d2;
   color: #1e1e1e;
   cursor: pointer;
+}
+
+.btn-subscribe:disabled {
+  cursor: default;
+  background-color: #5a5a5a;
 }
 
 .list--contact {
@@ -12130,5 +12129,17 @@ th {
   background-color: transparent;
   border: 0;
   border-left: 1px solid black;
+}
+
+@media screen and (max-width: 800px) {
+  .messages-created-at {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .messages-last-post {
+    display: none;
+  }
 }
 

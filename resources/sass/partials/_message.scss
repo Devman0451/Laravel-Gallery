@@ -90,3 +90,15 @@
     border: 0;
     border-left: 1px solid black;
 }
+
+@media screen and (max-width: 800px) {
+    .messages-created-at { 
+        display: none;
+    }
+}
+
+@media screen and (max-width: 500px) {
+    .messages-last-post { 
+        display: none;
+    }
+}
