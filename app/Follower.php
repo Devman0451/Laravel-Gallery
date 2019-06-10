@@ -19,6 +19,7 @@ class Follower extends Model
 
     public function scopeGetAllFollowers($query, $param) {
         return $query->where('followed_id', $param)
+                     ->orderBy('created_at', 'desc')
                      ->paginate(40);
     }
 }

@@ -15,4 +15,11 @@ class Comment extends Model
     public function project() {
         return $this->belongsTo('App\Project');
     }
+
+    function scopeGetProjectComments($query, $param) {
+        return $query->with('owner.profile')
+                     ->where('project_id', $param)
+                     ->orderBy('created_at', 'desc')
+                     ->paginate(10);
+    }
 }

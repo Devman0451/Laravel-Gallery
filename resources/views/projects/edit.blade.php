@@ -10,6 +10,10 @@
     
                 <label for="title">Title</label>
                 <input type="text" name="title" value="{{ $project->title }}">
+                @error('title')
+                    <p class="text-danger text-center"><strong>{{ $message }}</strong></p>
+                @enderror
+                
                 <label for="tags">Tags</label>
                 <input type="text" name="tags" value="{{ $project->tags }}">
                 <label for="description">Description</label>

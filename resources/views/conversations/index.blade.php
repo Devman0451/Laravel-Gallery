@@ -10,7 +10,7 @@
                 <tr>
                     <th>Avatar</th>
                     <th>Username</th>
-                    <th>Latest Message</th>
+                    <th>Last Post</th>
                     <th>Started On</th>
                     <th></th>
                 </tr>
@@ -23,7 +23,7 @@
                         @if (Auth::user()->id !== $conversation->sender_id )
                             <td><a href="{{ route('profile.show', ['profile' => $conversation->sender_id]) }}" class="text-light"><img src="{{  $conversation->sender->profile->profile_img }}" alt="avatar" class="profile-icon"></a></td>
                             <td><a href="{{ route('profile.show', ['profile' => $conversation->sender_id]) }}" class="text-light">{{ $conversation->sender->username }}</a></td>
-                            <td class="text-truncate">{{ count($conversation->messages) > 0 ? $conversation->latestMessage->message : '' }}</td>
+                            <td class="text-truncate">{{ $conversation->updated_at }}</td>
                             <td>{{ $conversation->created_at }}</td>
                             <td><a href="{{ route('messages.create') }}?user={{ $conversation->sender_id }}" class="text-white btn btn-success message-btn">Message</a>
                                 <form action="{{ route('messages.destroy', ['message' => $conversation->id]) }}" method="post" class="d-inline-block">
@@ -36,7 +36,7 @@
                         @else
                             <td><a href="{{ route('profile.show', ['profile' => $conversation->receiver->profile]) }}" class="text-light"><img src="{{  $conversation->receiver->profile->profile_img }}" alt="avatar" class="profile-icon"></a></td>
                             <td><a href="{{ route('profile.show', ['profile' => $conversation->receiver->profile]) }}" class="text-light">{{ $conversation->receiver->username }}</a></td>
-                            <td class="text-truncate">{{ count($conversation->messages) > 0 ? $conversation->latestMessage->message : '' }}</td>
+                            <td class="text-truncate">{{ $conversation->updated_at }}</td>
                             <td>{{ $conversation->created_at }}</td>
                             <td><a href="{{ route('messages.create') }}?user={{ $conversation->received_id }}" class="text-white btn btn-success message-btn">Message</a>
                                 <form action="{{ route('messages.destroy', ['message' => $conversation->id]) }}" method="post" class="d-inline-block">

@@ -49538,7 +49538,19 @@ __webpack_require__.r(__webpack_exports__);
 
   if (page === 'random') {
     getClassicalImages();
-  }
+  } // Toggles reply menu 
+  // =================================================================================
+  // const replyBtn = document.querySelector('.reply-btn');
+  // const replyTextBox = document.querySelector('.reply-textbox');
+  // function toggleReplyTextBox() {
+  //     if(replyTextBox.style.display = 'none') {
+  //         replyTextBox.style.display = 'block';
+  //     } else {
+  //         replyTextBox.style.display = 'none';
+  //     }
+  // }
+  // replyBtn.addEventListener('click', toggleReplyTextBox);
+
 })();
 
 /***/ }),

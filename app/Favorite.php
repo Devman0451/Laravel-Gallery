@@ -24,6 +24,7 @@ class Favorite extends Model
     public function scopeGetFavorites($query, $param) {
         return $query->with('project.owner.profile')
                      ->where('owner_id', $param)
+                     ->orderBy('created_at', 'desc')
                      ->paginate(40);
     }
 }

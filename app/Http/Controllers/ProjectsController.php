@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Project;
+use App\Comment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
@@ -65,7 +66,8 @@ class ProjectsController extends Controller
      */
     public function show(Project $project)
     {
-        return view('projects.single', compact('project'));
+        $comments = Comment::getProjectComments($project->id);
+        return view('projects.single', compact('project', 'comments'));
     }
 
     /**

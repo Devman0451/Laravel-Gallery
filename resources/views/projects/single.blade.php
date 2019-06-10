@@ -9,19 +9,21 @@
         </div>
 
         @auth
-            @if(auth()->user()->id === $project->owner_id)
+            @can('update', $project)
                 <ul class="list-group d-flex flex-row">
                     <li class="px-2"><a href="{{ route('projects.edit', ['project' => $project]) }}" class="btn btn-dark">Edit</a></li>
                     <li class="px-2">
-                        <form action="{{ route('projects.destroy', ['project' => $project]) }}" method="post">
-                            @csrf
-                            @method('DELETE')
+                        @can('delete', $project)
+                            <form action="{{ route('projects.destroy', ['project' => $project]) }}" method="post">
+                                @csrf
+                                @method('DELETE')
 
-                            <input type="submit" value="Delete" class="btn btn-danger">
-                        </form>
+                                <input type="submit" value="Delete" class="btn btn-danger">
+                            </form>
+                        @endcan
                     </li>
                 </ul>
-            @endif
+            @endcan
 
             <ul class="list-group d-flex flex-row mt-2">
                 @if (count(App\Like::getUserLike($project->id)->get()) == 0)
@@ -80,15 +82,31 @@
             <h4 class="pb-4">Comments</h4>
             <ul class="comments-list">
 
-            @if (count($project->comments) > 0)
-                @foreach($project->comments as $comment)
+            @if (count($comments) > 0)
+                @foreach($comments as $comment)
                     <li>
                         <div class="comment-single pt-1">
                             <p><a href="{{ route('profile.show', ['profile' => $comment->owner->profile]) }}" class="text-light">{{ $comment->owner->username }}</a><span> on </span> {{ $comment->created_at->format('m-d-Y H:i:s') }}</p>
                             <p>{{ $comment->comment }}</p>
+                            @can('update', $project)
+                                <button class="btn btn-dark reply-btn">Reply</button>
+                            @endcan
                         </div>
                     </li>
+                    @can('update', $project)
+                        @auth
+                            <div class="reply-textbox">
+                                <form action="" method="post" class="comment-form">
+                                    @csrf
+                                    <textarea name="reply" cols="30" rows="10" class="comment"></textarea>
+                                    <input type="submit" name="submit" value="Reply" class="btn-subscribe">
+                                </form>
+                            </div>
+                        @endauth
+                    @endcan
                 @endforeach
+            @else
+                <p>No Comments!</p>
             @endif
 
             </ul>

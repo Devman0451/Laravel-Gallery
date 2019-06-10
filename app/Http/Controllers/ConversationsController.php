@@ -59,6 +59,7 @@ class ConversationsController extends Controller
         if ($conversation == null) return redirect('/messages');
 
         $this->validateConversation($request, $conversation->id);
+        $conversation->touch();
 
         return redirect()->back()->with('conversation', $conversation);
     }

@@ -9,11 +9,13 @@
             background-repeat: no-repeat;
             ">
             @auth
-                @if (Auth::user()->id == $profile->owner->id)
+                @can('update', $profile)
                     <a href="{{ route('profile.edit', ['profile' => $profile]) }}" class="text-white banner-button" title="Upload Banner Image"><i class="fas fa-arrow-up"></i></a>
-                @else
+                @endcan
+
+                @cannot('update', $profile)
                     <a href="{{ route('messages.create') }}?user={{ $profile->owner->id }}" class="text-white banner-button btn btn-success message-btn">Message</a>
-                @endif
+                @endcannot
             @endauth
             <img src="{{ $profile->profile_img }}" alt="profile icon" class="profile-icon">
             <div class="profile-info pb-3">
@@ -22,7 +24,7 @@
                 <p class="profile-description"> {{ $profile->description }} </p>
             </div>
             @auth
-                @if (Auth::user()->id !== $profile->owner->id)
+                @cannot('update', $profile)
                     @if (count(App\Follower::getUserFollowing($profile->owner->id)->get()) == 0)
                         
                         <form action="{{ route('follower.store') }}" method="post">
@@ -41,7 +43,7 @@
                         </form>
                         
                     @endif
-                @endif
+                @endcannot
             @endauth
         </div>
 
