@@ -82,45 +82,64 @@
             <h4 class="pb-4">Comments</h4>
             <ul class="comments-list">
 
-            @if (count($comments) > 0)
-                @foreach($comments as $comment)
-                    <li>
-                        {{-- <div class="comment-single pt-1">
-                            <p><a href="{{ route('profile.show', ['profile' => $comment->owner->profile]) }}" class="text-light">{{ $comment->owner->username }}</a><span> on </span> {{ $comment->created_at->format('m-d-Y H:i:s') }}</p>
-                            <p>{{ $comment->comment }}</p>
-                            @can('update', $project)
-                                <button class="btn btn-dark reply-btn">Reply</button>
-                            @endcan
-                        </div> --}}
+                <li v-for="comment in comments">
+                    <div class="comment-single pt-1">
+                        <p><a :href="'{{url('/profile')}}/' + comment.owner.profile.id" class="text-light">@{{ comment.owner.username }}</a><span> on </span> @{{ comment.created_at }}</p>
+                        <p>@{{ comment.comment }}</p>
                         @can('update', $project)
-                            <comment :comment="{{ $comment }}" :owner="true"></comment>
+                            <button class="btn btn-dark reply-btn">Reply</button>
                         @endcan
+                    </div>
+                </li>
 
-                        @cannot('update', $project)
-                            <comment :comment="{{ $comment }}"></comment>
-                        @endcannot
-                    </li>
-
-                @endforeach
-            @else
-                <p>No Comments!</p>
-            @endif
             </ul>
         </div>
 
         @auth
-        <add-comment :buttontext="'Comment'" 
-                     :name="'comment'" 
-                     :endpoint="'/comment?project={{ $project->id }}'"
-                     ></add-comment>
-
-            {{-- <form action="{{ route('comment.store') }}?project={{ $project->id }}" method="post" class="comment-form">
-                @csrf
-                <textarea name="comment" cols="30" rows="10" class="comment"></textarea>
-                <input type="submit" name="submit" value="Submit" class="btn-subscribe">
-            </form> --}}
+            <div class="comment-form">
+                <textarea name="comment" cols="30" rows="10" class="comment" v-model="commentField"></textarea>
+                <input type="submit" name="submit" value="Submit" class="btn-subscribe" :disabled="commentField.length == 0" @click.prevent="postComment">
+            </div>
         @endauth
 
     </div>
 </section>
 @endsection 
+
+@section('scripts')
+    <script>
+        const app = new Vue({
+            el: '#app',
+            data: {
+                comments: {},
+                commentField: '',
+                error: false,
+                project: {!! $project->toJson() !!},
+                user: {!! Auth::check() ? Auth::user()->toJson() : 'null' !!}
+            },
+
+            mounted() {
+                this.getComments();
+            },
+
+            methods: {
+                getComments() {
+                    axios.get(`/api/projects/${this.project.id}/comments`)
+                        .then(res => this.comments = res.data)
+                        .catch(res => this.error = true)
+                },
+                postComment() {
+                    axios.post(`/api/projects/${this.project.id}/comment`, {
+                        api_token: this.user.api_token,                       
+                        comment : this.commentField
+                    })
+                    .then(res => {
+                        this.comments.unshift(res.data);
+                        this.commentField = '';
+                    })
+                    .catch(err => this.error = true);
+                }
+            }
+        });
+    </script>
+@endsection

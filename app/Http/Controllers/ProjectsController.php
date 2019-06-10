@@ -66,7 +66,6 @@ class ProjectsController extends Controller
      */
     public function show(Project $project)
     {
-        $comments = Comment::getProjectComments($project->id);
         return view('projects.single', compact('project', 'comments'));
     }
 

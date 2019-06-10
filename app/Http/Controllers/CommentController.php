@@ -4,18 +4,24 @@ namespace App\Http\Controllers;
 
 use App\Comment;
 use Illuminate\Http\Request;
+use App\Project;
+use Illuminate\Support\Facades\Auth;
 
 class CommentController extends Controller
 {
 
-                /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('auth');
+    //             /**
+    //  * Create a new controller instance.
+    //  *
+    //  * @return void
+    //  */
+    // public function __construct()
+    // {
+    //     $this->middleware('auth')->except('index');
+    // }
+
+    public function index(Project $project) {
+        return $project->comments()->with('owner.profile')->latest()->get();
     }
 
         /**
@@ -24,18 +30,20 @@ class CommentController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, Project $project)
     {
-        $attributes = $this->validate($request, [
+        $this->validate($request, [
             'comment' => 'required'
         ]);
-
-        $attributes['owner_id'] = auth()->user()->id;
-        $attributes['project_id'] = $_GET['project'];
-
-        Comment::create($attributes);
-
-        return redirect('/projects/' . $_GET['project']);
+        
+        $comment = $project->comments()->create([
+            'comment' => $request->comment,
+            'owner_id' => Auth::id()
+        ]);
+        
+        $comment = Comment::where('id', $comment->id)->with('owner.profile')->first();
+        
+        return $comment->toJson();
     }
 
         /**
@@ -49,3 +57,9 @@ class CommentController extends Controller
         //
     }
 }
+
+
+
+
+
+

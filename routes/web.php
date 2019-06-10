@@ -34,8 +34,6 @@ Route::get('/profile/{profile}', 'ProfilesController@show')->name('profile.show'
 Route::get('/profile/{profile}/edit', 'ProfilesController@edit')->name('profile.edit');
 Route::patch('/profile/{profile}', 'ProfilesController@update')->name('profile.update');
 
-Route::post('/comment', 'CommentController@store')->name('comment.store');
-
 Route::post('/like', 'LikesController@store')->name('like.store');
 Route::delete('/like/{like}', 'LikesController@destroy')->name('like.destroy');
 

@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
 
 class Comment extends Model
 {
@@ -21,5 +22,9 @@ class Comment extends Model
                      ->where('project_id', $param)
                      ->orderBy('created_at', 'desc')
                      ->paginate(10);
+    }
+
+    public function getCreatedAtAttribute($date) {
+        return Carbon::parse($date)->format('M d, Y  H:i:s a');
     }
 }
