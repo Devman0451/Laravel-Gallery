@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
 
 class Project extends Model
 {
@@ -14,6 +15,18 @@ class Project extends Model
 
     public function comments() {
         return $this->hasMany('App\Comment', 'project_id');
+    }
+
+    public function likes() {
+        return $this->hasMany('App\Like', 'project_id');
+    }
+
+    public function favorites() {
+        return $this->hasMany('App\Favorite', 'project_id');
+    }
+
+    public function getCreatedAtAttribute($date) {
+        return Carbon::parse($date)->format('M d, Y  h:i:s a');
     }
 
     public function scopeOrderByDate($query) {

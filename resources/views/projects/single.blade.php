@@ -26,35 +26,20 @@
             @endcan
 
             <ul class="list-group d-flex flex-row mt-2">
-                @if (count(App\Like::getUserLike($project->id)->get()) == 0)
-                    <li>
-                        <form action="{{ route('like.store') }}" method="post">
-                            @csrf
-                            <input type="hidden" name="project_id" value="{{ $project->id }}">
-                            <button class="like-btn" type="submit"><i class="far fa-thumbs-up"></i></button>
-                        </form>
-                    </li>
-                @else
-                    <li>
-                        <form action="{{ route('like.destroy', ['like' => App\Like::getUserLike($project->id)->first()]) }}" method="post">
-                            @csrf
-                            @method('DELETE')
-                            
-                            <input type="hidden" name="project_id" value="{{ $project->id }}">
-                            <button class="like-btn" type="submit"><i class="fas fa-thumbs-up"></i></button>
-                        </form>
-                    </li>
-                @endif
 
-                @if (count(App\Favorite::getUserFavorite($project->id)->get()) == 0)
+                <li>
+                    <button class="like-btn" type="submit"><i :class="[hasLiked ? 'fas' : 'far', 'fa-thumbs-up']" @click="submitLike"></i></button>
+                </li>
+
+                {{-- @if (count(App\Favorite::getUserFavorite($project->id)->get()) == 0) --}}
                     <li>
-                        <form action=" {{ route('favorite.store')}} " method="post">
+                        {{-- <form action=" {{ route('favorite.store')}} " method="post">
                             @csrf
-                            <input type="hidden" name="project_id" value="{{ $project->id }}">
-                            <button class="favorite-btn" type="submit"><i class="far fa-heart"></i></button>
-                        </form>
+                            <input type="hidden" name="project_id" value="{{ $project->id }}"> --}}
+                            <button class="favorite-btn" type="submit"><i :class="[hasFavorited ? 'fas' : 'far', 'fa-heart']" @click="submitFavorite"></i></button>
+                        {{-- </form> --}}
                     </li>
-                @else
+                {{-- @else
                     <li>
                         <form action="\{{ route('favorite.destroy', ['favorite' => App\Favorite::getUserFavorite($project->id)->first()]) }}" method="post">
                             @csrf
@@ -64,18 +49,18 @@
                             <button class="favorite-btn" type="submit"><i class="fas fa-heart"></i></button>
                         </form>
                     </li>
-                @endif
+                @endif --}}
             </ul>
         @endauth
 
         <h4 class="pt-4">Description</h4>
-        <h6>Created on: {{ $project->created_at->format("m-d-Y") }}</h6>
+        <h6>Created on: {{ $project->created_at }}</h6>
         <p class="description">{{ $project->description }} </p>
 
         <div class="d-flex flex-row justify-content-between tag-container">
             <p class="tags"><strong>Tags: </strong>{{ $project->tags }}</p>
-            <p class="tags"><strong>Likes: </strong>{{ $project->likes }}</p>
-            <p class="tags"><strong>Favorites: </strong>{{ $project->favorites }}</p>
+            <p class="tags"><strong>Likes: </strong>@{{ likes.length }}</p>
+            <p class="tags"><strong>Favorites: </strong>@{{ favorites.length }}</p>
         </div>
 
         <div class="comments py-4">
@@ -113,6 +98,10 @@
             data: {
                 comments: {},
                 commentField: '',
+                favorite: {!! App\Favorite::getUserFavorite($project->id)->first() ? App\Favorite::getUserFavorite($project->id)->first()->toJson() : 'null' !!},
+                favorites: [],
+                like: {!! App\Like::getUserLike($project->id)->first() ? App\Like::getUserLike($project->id)->first()->toJson() : 'null' !!},
+                likes: [],
                 error: false,
                 project: {!! $project->toJson() !!},
                 user: {!! Auth::check() ? Auth::user()->toJson() : 'null' !!}
@@ -120,9 +109,12 @@
 
             mounted() {
                 this.getComments();
+                this.getLikes();
+                this.getFavorites();
             },
 
             methods: {
+
                 getComments() {
                     axios.get(`/api/projects/${this.project.id}/comments`)
                         .then(res => this.comments = res.data)
@@ -138,6 +130,96 @@
                         this.commentField = '';
                     })
                     .catch(err => this.error = true);
+                },
+
+
+                getLikes() {
+                    axios.get(`/api/projects/${this.project.id}/likes`)
+                        .then(res => {
+                            this.likes = res.data
+                        })
+                        .catch(err => this.error = true)
+                },
+                postLike() {
+                    axios.post(`/api/projects/${this.project.id}/like`, {
+                        api_token: this.user.api_token, 
+                        })
+                        .then(res => {
+                            this.likes.unshift(res.data);
+                            this.like = res.data;
+                        })
+                        .catch(err => this.error = true);
+                },
+                deleteLike() {
+                    axios.delete(`/api/projects/${this.project.id}/like/${this.like.id}`, {
+                            api_token: this.user.api_token,
+                            headers: {
+                                'Accept': 'application/json',
+                                'Authorization': `Bearer ${this.user.api_token}`
+                            } 
+                        })
+                        .then(res => {
+                            this.likes = this.likes.filter(el => el.id !== this.like.id);
+                            this.like = null;
+                        })
+                        .catch(err => this.error = true);   
+                },
+                submitLike() {
+                    if(!this.hasLiked) {
+                        this.postLike();
+                    } else {
+                        this.deleteLike();
+                    }
+                },
+
+
+                getFavorites() {
+                    axios.get(`/api/projects/${this.project.id}/favorites`)
+                        .then(res => {
+                            this.favorites = res.data
+                        })
+                        .catch(err => this.error = true)
+                },
+                postFavorite() {
+                    axios.post(`/api/projects/${this.project.id}/favorite`, {
+                        api_token: this.user.api_token, 
+                        })
+                        .then(res => {
+                            this.favorites.unshift(res.data);
+                            this.favorite = res.data;
+                        })
+                        .catch(err => this.error = true);
+                },
+                deleteFavorite() {
+                    axios.delete(`/api/projects/${this.project.id}/favorite/${this.favorite.id}`, {
+                            api_token: this.user.api_token,
+                            headers: {
+                                'Accept': 'application/json',
+                                'Authorization': `Bearer ${this.user.api_token}`
+                            } 
+                        })
+                        .then(res => {
+                            this.favorites = this.favorites.filter(el => el.id !== this.favorite.id);
+                            this.favorite = null;
+                        })
+                        .catch(err => this.error = true);   
+                },
+                submitFavorite() {
+                    if(!this.hasFavorited) {
+                        this.postFavorite();
+                    } else {
+                        this.deleteFavorite();
+                    }
+                }
+            },
+
+            computed: {
+
+                hasLiked() {
+                    return this.like ? true : false;
+                },
+                hasFavorited() {
+                    return this.favorite ? true : false;
                 }
             }
         });

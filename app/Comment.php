@@ -25,6 +25,6 @@ class Comment extends Model
     }
 
     public function getCreatedAtAttribute($date) {
-        return Carbon::parse($date)->format('M d, Y  H:i:s a');
+        return Carbon::parse($date)->format('M d, Y  h:i:s a');
     }
 }

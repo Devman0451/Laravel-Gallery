@@ -5,13 +5,13 @@ namespace App\Http\Controllers;
 use App\Like;
 use App\Project;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class LikesController extends Controller
 {
 
-    public function __construct()
-    {
-        $this->middleware('auth');
+    public function index(Project $project) {
+        return $project->likes()->with('owner')->get();
     }
 
     /**
@@ -20,24 +20,17 @@ class LikesController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, Project $project)
     {
-        $attributes = $this->validate($request, [
-            'project_id' => 'required'
+
+        $like = $project->likes()->create([
+            'owner_id' => Auth::id()
         ]);
 
-        $like = Like::getUserLike($attributes['project_id'])->get();
+        $like = Like::where('id', $like->id)->with('owner.profile')->first();
 
-        $project = Project::getByID($attributes['project_id'])->get();
+        return $like->toJson();
 
-        if (count($like) == 0 && count($project) == 1) {
-            $attributes['owner_id'] = auth()->user()->id;
-            Like::create($attributes);
-            $likes = ['likes' => ++$project[0]->likes];
-            $project[0]->update( $likes);
-        }
-
-        return redirect()->back();
     }
 
     /**
@@ -46,12 +39,8 @@ class LikesController extends Controller
      * @param  \App\Like  $like
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Like $like)
+    public function destroy(Request $request, Project $project, Like $like)
     {
-        $project = Project::getByID($like->project_id)->first();
-        $project->likes--;
-        $project->save();
         $like->delete();
-        return redirect()->back();
     }
 }

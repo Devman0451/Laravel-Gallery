@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Carbon\Carbon;
 
 class User extends Authenticatable
 {
@@ -67,6 +68,10 @@ class User extends Authenticatable
 
     public function received_conversations() {
         return $this->hasMany('App\Conversation', 'received_id');
+    }
+
+    public function getCreatedAtAttribute($date) {
+        return Carbon::parse($date)->format('M d, Y  h:i:s a');
     }
 
     public function scopeGetByID($query, $param) {

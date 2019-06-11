@@ -10,16 +10,6 @@ use Illuminate\Support\Facades\Auth;
 class CommentController extends Controller
 {
 
-    //             /**
-    //  * Create a new controller instance.
-    //  *
-    //  * @return void
-    //  */
-    // public function __construct()
-    // {
-    //     $this->middleware('auth')->except('index');
-    // }
-
     public function index(Project $project) {
         return $project->comments()->with('owner.profile')->latest()->get();
     }

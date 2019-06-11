@@ -5,11 +5,13 @@ namespace App\Http\Controllers;
 use App\Favorite;
 use App\Project;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class FavoritesController extends Controller
 {
-    public function __construct() {
-        $this->middleware('auth');
+
+    public function index(Project $project) {
+        return $project->favorites()->with('owner')->get();
     }
 
     /**
@@ -18,24 +20,15 @@ class FavoritesController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, Project $project)
     {
-        $attributes = $this->validate($request, [
-            'project_id' => 'required'
+        $favorite = $project->favorites()->create([
+            'owner_id' => Auth::id()
         ]);
 
-        $favorite = Favorite::getUserFavorite($attributes['project_id'])->get();
+        $favorite = Favorite::where('id', $favorite->id)->with('owner.profile')->first();
 
-        $project = Project::getByID($attributes['project_id'])->get();
-
-        if (count($favorite) == 0 && count($project) == 1) {
-            $attributes['owner_id'] = auth()->user()->id;
-            Favorite::create($attributes);
-            $favorites = ['favorites' => ++$project[0]->favorites];
-            $project[0]->update( $favorites);
-        }
-
-        return redirect()->back();
+        return $favorite->toJson();
     }
 
     /**
@@ -44,12 +37,8 @@ class FavoritesController extends Controller
      * @param  \App\Favorite  $favorite
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Favorite $favorite)
+    public function destroy(Request $request, Project $project, Favorite $favorite)
     {
-        $project = Project::getByID($favorite->project_id)->first();
-        $project->favorites--;
-        $project->save();
         $favorite->delete();
-        return redirect()->back();
     }
 }

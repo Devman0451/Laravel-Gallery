@@ -9,6 +9,11 @@
 
     <title>{{ config('app.name', 'Image Gallery') }}</title>
 
+    <script>
+        // rename myToken as you like
+        window.csrfToken =  <?php echo json_encode(['csrfToken' => csrf_token(),]); ?>
+    </script>
+
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">

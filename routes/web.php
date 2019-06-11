@@ -34,12 +34,6 @@ Route::get('/profile/{profile}', 'ProfilesController@show')->name('profile.show'
 Route::get('/profile/{profile}/edit', 'ProfilesController@edit')->name('profile.edit');
 Route::patch('/profile/{profile}', 'ProfilesController@update')->name('profile.update');
 
-Route::post('/like', 'LikesController@store')->name('like.store');
-Route::delete('/like/{like}', 'LikesController@destroy')->name('like.destroy');
-
-Route::post('/favorite', 'FavoritesController@store')->name('favorite.store');
-Route::delete('/favorite/{favorite}', 'FavoritesController@destroy')->name('favorite.destroy');
-
 Route::post('/follower', 'FollowersController@store')->name('follower.store');
 Route::delete('/follower/{follower}', 'FollowersController@destroy')->name('follower.destroy');
 
