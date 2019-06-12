@@ -19,8 +19,8 @@ window.Vue = require('vue');
 // const files = require.context('./', true, /\.vue$/i);
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default));
 
-// Vue.component('comment', require('./components/CommentComponent.vue').default);
-// Vue.component('add-comment', require('./components/AddCommentComponent.vue').default);
+Vue.component('comment', require('./components/CommentComponent.vue').default);
+Vue.component('add-comment', require('./components/AddCommentComponent.vue').default);
 
 // import AddComment from './components/AddCommentComponent.vue';
 

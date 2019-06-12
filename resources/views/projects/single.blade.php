@@ -31,25 +31,9 @@
                     <button class="like-btn" type="submit"><i :class="[hasLiked ? 'fas' : 'far', 'fa-thumbs-up']" @click="submitLike"></i></button>
                 </li>
 
-                {{-- @if (count(App\Favorite::getUserFavorite($project->id)->get()) == 0) --}}
-                    <li>
-                        {{-- <form action=" {{ route('favorite.store')}} " method="post">
-                            @csrf
-                            <input type="hidden" name="project_id" value="{{ $project->id }}"> --}}
-                            <button class="favorite-btn" type="submit"><i :class="[hasFavorited ? 'fas' : 'far', 'fa-heart']" @click="submitFavorite"></i></button>
-                        {{-- </form> --}}
-                    </li>
-                {{-- @else
-                    <li>
-                        <form action="\{{ route('favorite.destroy', ['favorite' => App\Favorite::getUserFavorite($project->id)->first()]) }}" method="post">
-                            @csrf
-                            @method('DELETE')
-                            
-                            <input type="hidden" name="project_id" value="{{ $project->id }}">
-                            <button class="favorite-btn" type="submit"><i class="fas fa-heart"></i></button>
-                        </form>
-                    </li>
-                @endif --}}
+                <li>
+                    <button class="favorite-btn" type="submit"><i :class="[hasFavorited ? 'fas' : 'far', 'fa-heart']" @click="submitFavorite"></i></button>
+                </li>
             </ul>
         @endauth
 
@@ -68,13 +52,25 @@
             <ul class="comments-list">
 
                 <li v-for="comment in comments">
-                    <div class="comment-single pt-1">
-                        <p><a :href="'{{url('/profile')}}/' + comment.owner.profile.id" class="text-light">@{{ comment.owner.username }}</a><span> on </span> @{{ comment.created_at }}</p>
-                        <p>@{{ comment.comment }}</p>
-                        @can('update', $project)
-                            <button class="btn btn-dark reply-btn">Reply</button>
-                        @endcan
+                    <div class="comment-block">
+                        <a :href="'{{url('/profile')}}/' + comment.owner.profile.id"><img :src="comment.owner.profile.profile_img" alt="profile" class="comment-img"></a>
+                        <div class="comment-single">
+                            <p><a :href="'{{url('/profile')}}/' + comment.owner.profile.id" class="text-light">@{{ comment.owner.username }}</a><span> on </span> @{{ comment.created_at }}</p>
+                            <p>@{{ comment.comment }}</p>
+                            @can('update', $project)
+                                {{-- <button class="btn btn-dark reply-btn">Reply</button> --}}
+                                {{-- <comment /> --}}
+                            @endcan
+                        </div>
                     </div>
+
+                    @can('update', $project)
+                        {{-- <div class="comment-form">
+                            <textarea name="comment" cols="30" rows="10" class="comment" v-model="commentField"></textarea>
+                            <input type="submit" name="submit" value="Submit" class="btn-subscribe" :disabled="commentField.length == 0" @click.prevent="postComment">
+                        </div> --}}
+                        <comment />
+                    @endcan
                 </li>
 
             </ul>
@@ -98,9 +94,9 @@
             data: {
                 comments: {},
                 commentField: '',
-                favorite: {!! App\Favorite::getUserFavorite($project->id)->first() ? App\Favorite::getUserFavorite($project->id)->first()->toJson() : 'null' !!},
+                favorite: {!! Auth::check() && App\Favorite::getUserFavorite($project->id)->first() ? App\Favorite::getUserFavorite($project->id)->first()->toJson() : 'null' !!},
                 favorites: [],
-                like: {!! App\Like::getUserLike($project->id)->first() ? App\Like::getUserLike($project->id)->first()->toJson() : 'null' !!},
+                like: {!! Auth::check() && App\Like::getUserLike($project->id)->first() ? App\Like::getUserLike($project->id)->first()->toJson() : 'null' !!},
                 likes: [],
                 error: false,
                 project: {!! $project->toJson() !!},

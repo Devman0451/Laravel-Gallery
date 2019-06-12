@@ -51,11 +51,23 @@
     width: 100%;
     text-align: left;
 }
-  
-.comment-single {
+
+.comment-block {
+    position: relative;
     border: 1px solid #ddd;
     padding: 0 10px;
-    position: relative;
+    display: flex;
+    margin-bottom: 10px;
+    align-items: center;
+}
+
+.comment-img {
+    margin-right: 15px;
+    width: 50px;
+    height: 50px;
+}
+  
+.comment-single {
     word-break: break-all;
     line-height: 1.15;
 

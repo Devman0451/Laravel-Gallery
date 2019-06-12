@@ -1,18 +1,12 @@
 <template>
-    <div class="comment-single pt-1">
-        <p><a :href="commentLink" class="text-light">{{ commentOwner }}</a><span> on </span> {{ commentDate }}</p>
-        <p>{{ commentText }}</p>
+    <div>
         <button 
-            class="btn btn-dark reply-btn" 
+            class="btn btn-dark reply" 
             @click="toggleTextBox"
-            v-if="owner"
             >Reply
         </button>
 
-        <AddComment :buttontext="'Reply'" 
-                    :name="'reply'" 
-                    v-if="showReplyBox"/>
-     
+        <AddComment v-if="showReplyBox"/>
     </div>
 </template>
 
@@ -21,8 +15,6 @@
 
     export default {
         props: {
-            comment: Object,
-            owner: Boolean
         },
 
         components: {
@@ -42,26 +34,13 @@
         },
 
         computed: {
-            commentText() {
-                return this.comment ? this.comment.comment : "";
-            },
-            commentOwner() {
-                return this.comment ? this.comment.owner.username : "";
-            },
-            commentDate() {
-                return this.comment ? this.comment.created_at : "";
-            },
-            commentLink() {
-                return this.comment ? `/profile/${this.comment.owner.profile.id}` : '';
-            }
+
         },
     }
 </script>
 
 <style scoped>
-    .reply-btn {
-        position: absolute;
-        top: 10px;
-        right: 10px;
+    .reply {
+        margin-bottom: 10px;
     }
 </style>
