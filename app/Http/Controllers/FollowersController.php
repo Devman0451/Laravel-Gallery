@@ -3,14 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Follower;
+use App\Profile;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class FollowersController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
+
+    public function index(Profile $profile) {
+        return $profile->owner->followers()->with('owner')->get();
     }
+
 
     /**
      * Store a newly created resource in storage.
@@ -18,20 +21,16 @@ class FollowersController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, Profile $profile)
     {
-        $attributes = $this->validate($request, [
-            'followed_id' => 'required'
+        $follower = $profile->owner->followers()->create([
+            'follower_id' => Auth::id()
         ]);
 
-        $follower = Follower::getUserFollowing($attributes['followed_id'])->get();
+        $follower = Follower::where('id', $follower->id)->with('owner')->first();
 
-        if (count($follower) == 0) {
-            $attributes['follower_id'] = auth()->user()->id;
-            Follower::create($attributes);
-        }
+        return $follower->toJson();
 
-        return redirect()->back();
     }
 
     /**
@@ -40,9 +39,8 @@ class FollowersController extends Controller
      * @param  \App\Follower  $follower
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Follower $follower)
+    public function destroy(Request $request, Profile $profile, Follower $follower)
     {
         $follower->delete();
-        return redirect()->back();
     }
 }

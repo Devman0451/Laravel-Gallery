@@ -27,6 +27,11 @@
   .about-split {
     display: flex;
   }
+
+  .about-split:nth-child(odd) {
+    flex-direction: row-reverse;
+    background-color: darken($dark-gray, 5%);
+  }
   
   .about--left-col, .about--right-col {
     width: 50%;
@@ -91,6 +96,10 @@
       font-size: 16px;
       padding: 40px 0;
       background-image: url("/storage/images/static/about_landing_small.jpg");
+    }
+
+    .about-split:nth-child(odd) {
+      flex-direction: column;
     }
   
     .about--header {

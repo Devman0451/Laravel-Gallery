@@ -33,12 +33,23 @@ Route::middleware('auth:api')->group(function () {
 });
 
 
-Route::get('projects/{project}/favorites', 'favoritesController@index');
+Route::get('projects/{project}/favorites', 'FavoritesController@index');
 
 Route::middleware('auth:api')->group(function () {
-    Route::post('projects/{project}/favorite', 'favoritesController@store');
+    Route::post('projects/{project}/favorite', 'FavoritesController@store');
 });
 
 Route::middleware('auth:api')->group(function () {
-    Route::delete('projects/{project}/favorite/{favorite}', 'favoritesController@destroy');
+    Route::delete('projects/{project}/favorite/{favorite}', 'FavoritesController@destroy');
+});
+
+
+Route::get('profiles/{profile}/followers', 'FollowersController@index');
+
+Route::middleware('auth:api')->group(function () {
+    Route::post('profiles/{profile}/follower', 'FollowersController@store');
+});
+
+Route::middleware('auth:api')->group(function () {
+    Route::delete('profiles/{profile}/follower/{follower}', 'FollowersController@destroy');
 });

@@ -42,7 +42,7 @@
         <p class="description">{{ $project->description }} </p>
 
         <div class="d-flex flex-row justify-content-between tag-container">
-            <p class="tags"><strong>Tags: </strong>{{ $project->tags }}</p>
+            <p class="tags tags-tags"><strong>Tags: </strong>{{ $project->tags }}</p>
             <p class="tags"><strong>Likes: </strong>@{{ likes.length }}</p>
             <p class="tags"><strong>Favorites: </strong>@{{ favorites.length }}</p>
         </div>

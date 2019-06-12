@@ -25,15 +25,15 @@
             </div>
             @auth
                 @cannot('update', $profile)
-                    @if (count(App\Follower::getUserFollowing($profile->owner->id)->get()) == 0)
+                    {{-- @if (count(App\Follower::getUserFollowing($profile->owner->id)->get()) == 0) --}}
                         
-                        <form action="{{ route('follower.store') }}" method="post">
+                        {{-- <form action="{{ route('follower.store') }}" method="post">
                             @csrf
-                            <input type="hidden" name="followed_id" value="{{ $profile->owner->id }}">
-                            <button class="text-white banner-button banner-button-message btn btn-primary follow-btn" type="submit">Follow</button>
-                        </form>
+                            <input type="hidden" name="followed_id" value="{{ $profile->owner->id }}"> --}}
+                        <button class="text-white banner-button banner-button-message btn btn-primary follow-btn" type="submit" @click="handleFollow">@{{ buttonText }}</button>
+                        {{-- </form> --}}
             
-                    @else
+                    {{-- @else
                         
                         <form action="{{ route('follower.destroy', ['follower' => App\Follower::getUserFollowing($profile->owner->id)->first()]) }}" method="post">
                             @csrf
@@ -42,15 +42,15 @@
                             <button class="text-white banner-button banner-button-message btn btn-danger follow-btn" type="submit">Unfollow</button>
                         </form>
                         
-                    @endif
+                    @endif --}}
                 @endcannot
             @endauth
         </div>
 
         <div class="profile-links d-flex justify-content-center">
             <ul class="profile-links--list d-flex py-2 px-5">
-                <a href="{{ route('favorites') }}?user={{ $profile->owner->id }}" class="text-light"><li class="profile-links--listitem">Favorites</li></a>
-                <a href="{{ route('followers') }}?user={{ $profile->owner->id }}" class="text-light ml-3"><li class="profile-links--listitem">Followers</li></a>
+                <a href="{{ route('favorites') }}?user={{ $profile->owner->id }}" class="text-light"><li class="profile-links--listitem">Favorites <span class="text-secondary">({{ count($profile->owner->favorites) }})</span></li></a>
+                <a href="{{ route('followers') }}?user={{ $profile->owner->id }}" class="text-light ml-3"><li class="profile-links--listitem">Followers <span class="text-secondary">(@{{ followers.length }})</span></li></a>
             </ul>
         </div>
         <div class="gallery">
@@ -76,4 +76,79 @@
 
         </div>
     </section>
+@endsection
+
+@section('scripts')
+    <script>
+        const app = new Vue({
+            el: '#app',
+            data: {
+                buttonText: 'Follow',
+                follower: {!! Auth::check() && App\Follower::getUserFollowing($profile->owner->id)->first() ? App\Follower::getUserFollowing($profile->owner->id)->first()->toJson() : 'null' !!},
+                followers: [],
+                profile: {!! $profile->toJson() !!},
+                error: false,
+                user: {!! Auth::check() ? Auth::user()->toJson() : 'null' !!},
+            },
+
+            mounted() {
+                this.getFollowers();
+                this.handleButtonText();
+            },
+
+            methods: {
+                getFollowers() {
+                    axios.get(`/api/profiles/${this.profile.id}/followers`)
+                        .then(res => this.followers = res.data)
+                        .catch(res => this.error = true)
+                },
+                follow() {
+                    axios.post(`/api/profiles/${this.profile.id}/follower`, {
+                        api_token: this.user.api_token,  
+                    })
+                    .then(res => {
+                        this.followers.unshift(res.data);
+                        this.buttonText = 'Unfollow';
+                        this.follower = res.data;
+                    })
+                    .catch(res => this.error = true)
+                },
+                unfollow() {
+                    axios.delete(`/api/profiles/${this.profile.id}/follower/${this.follower.id}`, {
+                        api_token: this.user.api_token,
+                            headers: {
+                                'Accept': 'application/json',
+                                'Authorization': `Bearer ${this.user.api_token}`
+                            } 
+                        })
+                        .then(res => {
+                            this.followers = this.followers.filter(el => el.id !== this.follower.id);
+                            this.follower = null;
+                            this.buttonText = 'Follow';
+                        })
+                        .catch(err => this.error = true);   
+                },
+                handleFollow() {
+                    if (!this.isFollowing) {
+                        this.follow();
+                    } else {
+                        this.unfollow();
+                    }
+                },
+                handleButtonText() {
+                    if (!this.isFollowing) {
+                        this.buttonText = "Follow";
+                    } else {
+                        this.buttonText = "Unfollow";
+                    }
+                }
+            },
+
+            computed: {
+                isFollowing() {
+                    return this.follower ? true : false;
+                }
+            }
+        })
+    </script>
 @endsection

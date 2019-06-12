@@ -55,7 +55,11 @@ class User extends Authenticatable
     }
 
     public function followers() {
-        return $this->hasMany('App\Like', 'followed_id', 'id');
+        return $this->hasMany('App\Follower', 'followed_id', 'id');
+    }
+
+    public function favorites() {
+        return $this->hasMany('App\Favorite', 'owner_id', 'id');
     }
 
     public function sent_messages() {

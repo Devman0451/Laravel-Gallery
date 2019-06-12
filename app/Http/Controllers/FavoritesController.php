@@ -14,6 +14,7 @@ class FavoritesController extends Controller
         return $project->favorites()->with('owner')->get();
     }
 
+
     /**
      * Store a newly created resource in storage.
      *

@@ -23,10 +23,10 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
 <body>
+    @include('inc.navbar')
+    @include('inc.mobile-navbar')
     <div id="app">
         
-        @include('inc.navbar')
-        @include('inc.mobile-navbar')
         @include('inc.messages')
 
         <main>

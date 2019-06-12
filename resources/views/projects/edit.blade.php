@@ -16,6 +16,10 @@
                 
                 <label for="tags">Tags</label>
                 <input type="text" name="tags" value="{{ $project->tags }}">
+                @error('tags')
+                    <p class="text-danger text-center"><strong>{{ $message }}</strong></p>
+                @enderror
+
                 <label for="description">Description</label>
                 <textarea name="description" cols="30" rows="10">{{ $project->description }}</textarea>
                 <input type="submit" name="submit" value="Upload" class="btn auth-btn mt-2">

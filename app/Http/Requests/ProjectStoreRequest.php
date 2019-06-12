@@ -26,7 +26,7 @@ class ProjectStoreRequest extends FormRequest
         return [
             'title' => 'required|max:60',
             'description' => 'nullable',
-            'tags' => 'nullable',
+            'tags' => 'nullable|max:150',
             'image' => 'required|image|max:2000'
         ];
     }
