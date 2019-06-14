@@ -11797,6 +11797,10 @@ input[type=file] {
   width: 100%;
 }
 
+.comment-count {
+  font-size: 18px !important;
+}
+
 .comments-list {
   padding: 0;
   width: 100%;

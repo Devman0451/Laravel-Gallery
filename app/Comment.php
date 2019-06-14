@@ -10,11 +10,11 @@ class Comment extends Model
     protected $guarded = [];
 
     public function owner() {
-        return $this->belongsTo('App\User');
+        return $this->belongsTo('App\User', 'owner_id', 'id');
     }
 
     public function project() {
-        return $this->belongsTo('App\Project');
+        return $this->belongsTo('App\Project', 'project_id', 'id');
     }
 
     function scopeGetProjectComments($query, $param) {

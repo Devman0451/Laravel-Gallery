@@ -48,7 +48,7 @@
         </div>
 
         <div class="comments py-4">
-            <h4 class="pb-4">Comments</h4>
+            <h4 class="pb-4">Comments<span class="text-secondary comment-count">(@{{ comments.length }})</span></h4>
             <ul class="comments-list">
 
                 <li v-for="comment in comments">
@@ -92,7 +92,7 @@
         const app = new Vue({
             el: '#app',
             data: {
-                comments: {},
+                comments: [],
                 commentField: '',
                 favorite: {!! Auth::check() && App\Favorite::getUserFavorite($project->id)->first() ? App\Favorite::getUserFavorite($project->id)->first()->toJson() : 'null' !!},
                 favorites: [],
@@ -107,6 +107,7 @@
                 this.getComments();
                 this.getLikes();
                 this.getFavorites();
+                this.listen();
             },
 
             methods: {
@@ -126,6 +127,12 @@
                         this.commentField = '';
                     })
                     .catch(err => this.error = true);
+                },
+                listen() {
+                    Echo.channel(`projects.${this.project.id}`)
+                        .listen('NewComment', comment => {
+                            this.comments.unshift(comment);
+                        })
                 },
 
 
