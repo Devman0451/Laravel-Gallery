@@ -3,7 +3,11 @@
 @section('content')
 
 @auth
-    <div class="container my-5">
+    <messages 
+        :user="user"
+        :other-user="otherUser"
+        :conversation="conversation"/>
+    {{-- <div class="container my-5">
         <div class="row">
             <div class="col-11 m-auto message-container">
 
@@ -53,7 +57,21 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
 @endauth
-</section>
+@endsection
+
+@section('scripts')
+    <script>
+        const app = new Vue({
+            el: '#app',
+            data() {
+                return {
+                    user: {!! Auth::check() ? Auth::user()->toJson() : 'null'  !!},
+                    otherUser: {!! $user !!},
+                    conversation: {!! $conversation !!}
+                }
+            }
+        })
+    </script>
 @endsection

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Message;
+use App\Conversation;
 use Illuminate\Http\Request;
 
 class MessageController extends Controller
@@ -11,6 +12,10 @@ class MessageController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+    }
+
+    public function index(Conversation $conversation) {
+        return $conversation->messages()->with('owner.profile')->get();
     }
 
     /**

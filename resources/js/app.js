@@ -21,6 +21,7 @@ window.Vue = require('vue');
 
 Vue.component('comment', require('./components/CommentComponent.vue').default);
 Vue.component('add-comment', require('./components/AddCommentComponent.vue').default);
+Vue.component('messages', require('./components/MessagesComponent.vue').default);
 
 // import AddComment from './components/AddCommentComponent.vue';
 

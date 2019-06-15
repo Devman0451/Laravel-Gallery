@@ -12087,7 +12087,7 @@ th {
 
 .message-container {
   background-color: #191919;
-  padding: 25px 0 0;
+  padding: 0;
   margin: 25px;
   border-radius: 10px;
 }
@@ -12098,6 +12098,7 @@ th {
 
 .message-title-header {
   margin-left: 20px;
+  padding: 25px 0;
 }
 
 .message-title-header--text {

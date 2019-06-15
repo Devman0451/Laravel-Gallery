@@ -39,4 +39,6 @@ Route::delete('/follower/{follower}', 'FollowersController@destroy')->name('foll
 
 Route::resource('messages', 'ConversationsController');
 
+Route::get('/messages/{conversation}/messages', 'MessageController@index');
+
 Route::post('/message', 'MessageController@store');

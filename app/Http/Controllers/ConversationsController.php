@@ -38,7 +38,7 @@ class ConversationsController extends Controller
         
         if ($conversation == null) return redirect('/messages');
 
-        $user = User::getByID($_GET['user'])->get();
+        $user = User::with('profile')->getByID($_GET['user'])->get();
 
         return view('conversations.create', [
             'conversation' => $conversation,
