@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Message;
 use App\Conversation;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use App\Events\NewMessage;
 
 class MessageController extends Controller
 {
@@ -24,9 +26,9 @@ class MessageController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, Conversation $conversation)
     {
-        //
+        return $this->validateConversation($request, $conversation);
     }
 
     /**
@@ -72,5 +74,22 @@ class MessageController extends Controller
     public function destroy(Message $message)
     {
         //
+    }
+
+    protected function validateConversation($request, $conversation) {
+        $this->validate($request, [
+            'message' => 'required|min:1'
+        ]);
+
+        $message = $conversation->messages()->create([
+            'message' => $request->message,
+            'sender_id' => Auth::id()
+        ]);
+
+        $message = Message::where('id', $message->id)->with('owner.profile')->first();
+
+        broadcast(new NewMessage($conversation, $message))->toOthers();
+
+        return $message->toJson();
     }
 }

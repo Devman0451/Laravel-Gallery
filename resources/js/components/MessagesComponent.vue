@@ -34,8 +34,8 @@
 
                 <div class="message-form-container">
                     <div class="message-form d-flex flex-row">
-                        <textarea class="message-textarea" name="message" cols="30" rows="10" placeholder="Type your message"></textarea>
-                        <button type="submit" class="text-white message-btn-send"><i class="fas fa-paper-plane"></i></button>
+                        <textarea class="message-textarea" name="message" cols="30" rows="10" placeholder="Type your message..." v-model="text"></textarea>
+                        <button type="submit" class="text-white message-btn-send" @click="postMessages" :disabled="disableSubmit"><i class="fas fa-paper-plane"></i></button>
                     </div>
                 </div>
             </div>
@@ -56,12 +56,14 @@
         data() {
             return {
                 messages: [],
+                text: '',
                 error: false
             }
         },
 
         mounted() {
             this.getMessages();
+            this.listen();
         },
 
         methods: {
@@ -72,16 +74,29 @@
                 axios.get(`/messages/${this.conversation.id}/messages`)
                     .then(res => this.messages = res.data)
                     .catch(err => this.error = err)
+            }, 
+            postMessages() {
+                axios.post(`/messages/${this.conversation.id}/message`, {
+                    'message': this.text
+                })
+                    .then(res => {
+                        this.messages.push(res.data);
+                        this.text = '';
+                    })
+                    .catch(err => this.error = err)
+            },
+            listen() {
+                Echo.join(`chat.${this.conversation.id}`)
+                    .listen('NewMessage', message => {
+                        this.messages.push(message);
+                    });
             }
         },
 
         computed: {
+            disableSubmit() {
+                return this.text.length < 1;
+            }
         },
     }
 </script>
-
-<style scoped>
-    .reply {
-        margin-bottom: 10px;
-    }
-</style>

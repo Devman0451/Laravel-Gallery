@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
 
 class Message extends Model
 {
@@ -14,6 +15,14 @@ class Message extends Model
 
     public function conversation() {
         return $this->belongsTo('App\Conversation');
+    }
+
+    public function getCreatedAtAttribute($date) {
+        return Carbon::parse($date)->format('M d, Y  h:i:s a');
+    }
+
+    public function getUpdatedAtAttribute($date) {
+        return Carbon::parse($date)->format('M d, Y  h:i:s a');
     }
 
 }

@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
 
 class Conversation extends Model
 {
@@ -26,6 +27,14 @@ class Conversation extends Model
 
     public function receiver() {
         return $this->hasOne('App\User', 'id', 'received_id');
+    }
+
+    public function getCreatedAtAttribute($date) {
+        return Carbon::parse($date)->format('M d, Y  h:i:s a');
+    }
+
+    public function getUpdatedAtAttribute($date) {
+        return Carbon::parse($date)->format('M d, Y  h:i:s a');
     }
 
     public function scopeFindConversations($query) {

@@ -61,7 +61,9 @@ class ConversationsController extends Controller
         $this->validateConversation($request, $conversation->id);
         $conversation->touch();
 
-        return redirect()->back()->with('conversation', $conversation);
+        return ["status" => "success"];
+
+        // return redirect()->back()->with('conversation', $conversation);
     }
 
     /**
