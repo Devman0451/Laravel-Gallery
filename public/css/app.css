@@ -12152,6 +12152,17 @@ th {
   border-radius: 20px;
 }
 
+.message-form-container {
+  position: relative;
+}
+
+.message-is-typing {
+  position: absolute;
+  top: 120px;
+  left: 5px;
+  text-align: center;
+}
+
 .message-textarea {
   resize: none;
   width: 100%;

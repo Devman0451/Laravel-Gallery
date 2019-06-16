@@ -11,7 +11,7 @@
                     </div>
                 </div>
 
-                <div class="message-window">
+                <div class="message-window" v-chat-scroll>
 
                     <div :class="isUserMessage(message) ? 'message-user-message' : 'message-user-message foreign-message'" 
                         v-for="message in messages" 
@@ -34,9 +34,16 @@
 
                 <div class="message-form-container">
                     <div class="message-form d-flex flex-row">
-                        <textarea class="message-textarea" name="message" cols="30" rows="10" placeholder="Type your message..." v-model="text"></textarea>
+                        <textarea class="message-textarea" 
+                                  name="message" 
+                                  cols="30" 
+                                  rows="10" 
+                                  placeholder="Type your message..." 
+                                  v-model="text"
+                                  @keydown="userTypingEvent"></textarea>
                         <button type="submit" class="text-white message-btn-send" @click="postMessages" :disabled="disableSubmit"><i class="fas fa-paper-plane"></i></button>
                     </div>
+                     <span v-if="activeUser" class="text-muted message-is-typing">{{ activeUser.username }} is typing...</span>
                 </div>
             </div>
         </div>
@@ -57,6 +64,8 @@
             return {
                 messages: [],
                 text: '',
+                activeUser: null,
+                activeUserTimeout: null,
                 error: false
             }
         },
@@ -89,7 +98,22 @@
                 Echo.join(`chat.${this.conversation.id}`)
                     .listen('NewMessage', message => {
                         this.messages.push(message);
-                    });
+                    })
+                    .listenForWhisper('typing', user => {
+                        this.activeUser = user;
+
+                        if (this.activeUserTimeout) {
+                            clearTimeout(this.activeUserTimeout);
+                        }
+
+                        this.activeUserTimeout = setTimeout(() => {
+                            this.activeUser = null;
+                        }, 3000);
+                    })
+            },
+            userTypingEvent() {
+                Echo.join(`chat.${this.conversation.id}`)
+                    .whisper('typing', this.user)
             }
         },
 
