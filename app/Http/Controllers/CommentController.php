@@ -12,7 +12,7 @@ class CommentController extends Controller
 {
 
     public function index(Project $project) {
-        return $project->comments()->with('owner.profile')->latest()->get();
+        return $project->comments()->with('owner.profile')->latest()->paginate(10);
     }
 
         /**

@@ -27,7 +27,7 @@ class ProfileUpdateRequest extends FormRequest
             'location' => 'nullable|max:50',
             'description' => 'nullable|max:100',
             'profile_img' => 'image|nullable|max:200|dimensions:max_width=100,max_height=100',
-            'banner_img' => 'image|nullable|max:2000|dimensions:max_width=1920,max_height=365'
+            'banner_img' => 'image|nullable|max:2000|dimensions:max_width=2560,max_height=365'
         ];
     }
 }

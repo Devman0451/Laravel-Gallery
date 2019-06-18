@@ -3,7 +3,7 @@
 @section('content')
 <section class="post py-4">
     <div class="post-container">
-        <h1>{{ $project->title }} <span>by</span> <a href="{{ route('profile.show', ['profile' => $project->owner->profile]) }}" class="text-light">{{ $project->owner->username }}</a></h1>
+        <h1>{{ $project->title }} <span style="font-size:30px;">by</span> <a href="{{ route('profile.show', ['profile' => $project->owner->profile]) }}" class="text-light">{{ $project->owner->username }}</a></h1>
         <div class="post--image-container py-4">
             <img src="/storage/images/uploads/{{ $project->owner->username }}/{{ $project->image }}" alt="upload" class="single-image">
         </div>
@@ -51,7 +51,7 @@
             <h4 class="pb-4">Comments<span class="text-secondary comment-count">(@{{ comments.length }})</span></h4>
             <ul class="comments-list">
 
-                <li v-for="comment in comments">
+                <li v-for="comment in comments.data">
                     <div class="comment-block">
                         <a :href="'{{url('/profile')}}/' + comment.owner.profile.id"><img :src="comment.owner.profile.profile_img" alt="profile" class="comment-img"></a>
                         <div class="comment-single">
@@ -74,6 +74,8 @@
                 </li>
 
             </ul>
+
+            <pagination :data="comments" @pagination-change-page="getResults"></pagination>
         </div>
 
         @auth
@@ -92,7 +94,7 @@
         const app = new Vue({
             el: '#app',
             data: {
-                comments: [],
+                comments: {},
                 commentField: '',
                 favorite: {!! Auth::check() && App\Favorite::getUserFavorite($project->id)->first() ? App\Favorite::getUserFavorite($project->id)->first()->toJson() : 'null' !!},
                 favorites: [],
@@ -134,6 +136,10 @@
                             this.comments.unshift(comment);
                         })
                 },
+                getResults(page = 1) {
+                    axios.get(`/api/projects/${this.project.id}/comments?page=${page}`)
+                        .then(response => this.comments = response.data)
+		        },
 
 
                 getLikes() {
